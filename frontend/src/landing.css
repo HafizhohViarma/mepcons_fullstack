@@ -1,0 +1,448 @@
+/* General Body */
+body {
+  font-family: Arial, sans-serif;
+  color: #000000; 
+  background-color: #ffffff; 
+}
+
+/* Navbar */
+.logo-image {
+  width: 150px; 
+  height: auto;
+  transition: width 0.3s ease; 
+}
+
+.header_area.scrolled .logo-image {
+  width: 100px;
+}
+
+.header_area .navbar {
+  background-color: #0095FF;
+  padding: 1rem 0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.header_area.scrolled .navbar {
+  background-color: #256BE4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header_area .navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  margin-left: 1rem;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 2rem;
+  list-style-type: none;
+}
+
+.navbar-nav .nav-item .nav-link {
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+  color: #FFC107; 
+}
+
+.navbar-nav .nav-item:last-child .nav-link {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+/* Banner area */
+.home_banner_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  background: url('img/landing.png') no-repeat center center;
+  background-size: cover;
+  min-height: 650px;
+  color: #ffffff; 
+}
+
+.banner_inner .container {
+  display: flex;
+  justify-content: center;
+}
+
+.banner_content {
+  width: 60%;
+  text-align: left;
+  margin-right: auto;
+}
+
+.banner_content h2,
+.banner_content p {
+  max-width: 120%;
+}
+
+.banner_content h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.banner_content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+}
+
+/* Button */
+.primary-btn {
+  background-color: #FFC107;
+  color: #ffffff;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn-detail {
+  background-color: #256BE4;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 7px;
+  text-decoration: none;
+}
+
+.primary-btn:hover {
+  background-color: #e0a800;
+  color: #ffffff;
+}
+
+/* Card Section */
+.card_section {
+  position: relative;
+  top: -130px;
+  margin-bottom: -160px;
+  padding: 3rem 0;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-item {
+  background-color: white;
+  border-radius: 8px;
+  height: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.card-item:hover {
+  transform: translateY(-5px);
+}
+
+.card-icon {
+  font-size: 4rem;
+  color: #256BE4;
+  margin-right: 15px;
+}
+
+.card-content h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.card-content p {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Section kelas with white background */
+.kelas {
+  background-color: #ffffff;
+  color: #333333; 
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.kelas h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #256BE4;
+}
+
+.kelas p {
+  font-size: 14px;
+  padding-top: 22px;
+  margin: 0 auto; 
+  max-width: 600px; 
+  font-style: italic;
+}
+
+.poster-image{
+    width: 100%; 
+    height: auto;
+    width: 400px;
+    margin: 0 auto; 
+    display: block;
+} 
+
+.row .video{
+  margin-bottom: 80px;
+}
+
+.btn-akses {
+  margin-top: 60px;
+}
+
+.btn-detail2 {
+  background-color: #FFC107; 
+  color: #fff;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-detail2.mx-2:hover {
+  background-color: #007BFF; /* Warna biru saat hover */
+  color: #fff;
+}
+
+.btn-detail2.blue {
+  background-color: #007BFF; /* Warna biru */
+  color: #fff;
+}
+
+.btn-detail2.blue:hover {
+  background-color: #FFC107; /* Warna kuning saat hover */
+  color: #fff;
+}
+
+/* css section tentang kami */
+.about {
+  background-color: #ffffff;
+  color: #333333; 
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #256BE4;
+}
+
+.about p {
+  font-size: 14px;
+  padding-top: 22px;
+  margin: 0 auto; 
+  max-width: 600px; 
+  font-style: italic; 
+}
+
+/* css section .manfaat */
+.manfaat {
+  background-color: #ffffff;
+  color: #333333; 
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.manfaat h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #256BE4;
+}
+
+.manfaat p {
+  font-size: 14px;
+  padding-top: 22px;
+  margin: 0 auto; 
+  max-width: 600px; 
+  font-style: italic; 
+}
+
+.manfaat .icon{
+  margin-top: 15px;
+}
+
+.manfaat h4 {
+  font-size: px;
+  font-weight: bold;
+  color: #fff;
+}
+.manfaat.row {
+  background-color: #282c34;
+  padding: 1px 0;
+}
+
+.single_feature {
+  padding: 20px;
+  background: #256BE4;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.single_feature .icon {
+  font-size: 40px;
+  color: #fff;
+}
+
+.single_feature .icon .ahli img {
+  width: auto; 
+  height: 70px; 
+  max-width: 100%;
+  object-fit: contain; 
+}
+
+/* section testimoni */
+.testi {
+  background-color: #ffffff;
+  color: #333333; 
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.testi h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #256BE4;
+}
+
+.testi p {
+  font-size: 14px;
+  padding-top: 22px;
+  margin: 0 auto; 
+  max-width: 600px; 
+  font-style: italic; 
+}
+
+/* Slider */
+body .slider {
+  margin: 0;
+  padding: 0;
+}
+h2 .slider {
+  font-size: 60px;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+}
+h3 .slider{
+  font-size: 40px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 150px 0;
+  margin: 0px auto;
+  font-family: sans-serif;
+  margin: 0 50px;
+}
+
+/* dihalaman see atau details */
+.card-full {
+  position: relative;
+  background: url('img/blue-gradient.png') no-repeat center;
+  background-size: cover;
+  background-position: center;
+  min-height: 250px; 
+  max-height: 500px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  top: 40px;
+  border-radius: 40px; 
+  overflow: hidden; 
+}
+
+.card-content-see {
+  /* background-color: rgba(0, 0, 0, 0.6);  */
+  padding: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.card-title-see {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+}
+
+.daftar-kelas {
+  padding-top: 100px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  padding-top: 55px;
+}
+
+/* Tambahkan ini di file CSS Anda */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+}
+
+.close-button {
+  cursor: pointer;
+  font-size: 24px;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+}
+
