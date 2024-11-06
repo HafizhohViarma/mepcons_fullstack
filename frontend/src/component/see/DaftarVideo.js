@@ -113,7 +113,7 @@ const DaftarVideo = () => {
                 <div className="card">
                   <img src={videos.sampul_video} alt="Logo" className="poster-image card-img-top" />
                   <div className="card-body">
-                    <h3 className="card-title">{videos.judul_video}</h3>
+                    <h4 className="card-title">{videos.judul_video}</h4>
                     <div className="d-flex justify-content-between align-items-center">
                       <a href="detail_video1.php" className="btn btn-primary">Detail</a>
                       <p className="text-danger mb-0">{formatPrice(videos.harga_video)}</p>

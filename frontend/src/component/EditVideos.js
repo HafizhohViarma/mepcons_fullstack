@@ -50,7 +50,7 @@ const EditVideos = () => {
                 }
             });
             alert('File video berhasil diperbarui!');
-            navigate(`/detail-video/${id}`);  
+            navigate(`/videos/${id}`);  
         } catch (error) {
             console.error('Error updating video file:', error);
             alert('Gagal memperbarui file video!');
@@ -66,7 +66,7 @@ const EditVideos = () => {
             {/* Sidebar */}
             <SidebarList />
             <div className="content" style={{ backgroundColor: 'white', padding: '20px' }}>
-                <Link to="/video">
+                <Link to={`/videos/${id}`}>
                     <button className="button is-warning">Kembali</button>
                 </Link>
                 <h1 className="has-text-black text-center">Form Edit Video (Detail)</h1>

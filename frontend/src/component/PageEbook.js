@@ -45,6 +45,14 @@ const PageEbook = () => {
     }
   };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
 
   return (
     <div className="dashboard">
@@ -89,7 +97,7 @@ const PageEbook = () => {
                     Download
                   </a>
                 </td>
-                <td>{`Rp ${ebook.harga_ebook}`}</td> 
+                <td>{formatPrice(ebook.harga_ebook)}</td> 
                 <td>
                   <Link to={`/edit-ebook/${ebook.id_ebook}`}>
                     <button className="button is-small is-info">Edit</button>
