@@ -29,6 +29,7 @@ router.post('/videos/:id_video/videoFiles', upload.single('video_file'), videoCo
 // Mengedit video file yang ada
 router.put('/videos/:id_video/videoFiles/:id_file', upload.single('video_file'), videoController.updateVideoFile);
 
+router.delete('/videos/:id_video/videoFiles/:id_file', videoController.deleteVideoFile);
 
 module.exports = router;
 //////ancok

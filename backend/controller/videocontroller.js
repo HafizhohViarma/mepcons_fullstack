@@ -74,7 +74,7 @@ exports.getDetailVideo = async (req, res) => {
                 {
                     model: VideoFile,
                     as: 'file',
-                    attributes: ['sub_judul', 'video_file'],  
+                    attributes: ['id_file','sub_judul', 'video_file'],  
                 },
             ],
         });
@@ -237,6 +237,32 @@ exports.updateVideoFile = async (req, res) => {
     } catch (error) {
         console.error('Error updating video file:', error);
         res.status(500).json({ message: 'Error updating video file', error: error.message });
+    }
+};
+
+exports.deleteVideoFile = async (req, res) => {
+    const { id_video, id_file } = req.params;
+
+    try {
+        // Cari file video berdasarkan id_file dan id_video
+        const videoFile = await VideoFile.findOne({
+            where: {
+                id_file: id_file,
+                id_video: id_video,
+            }
+        });
+
+        if (!videoFile) {
+            return res.status(404).json({ message: 'File video not found' });
+        }
+
+        // Hapus file video
+        await videoFile.destroy();
+
+        res.status(200).json({ message: 'File video berhasil dihapus' });
+    } catch (error) {
+        console.error('Error deleting video file:', error);
+        res.status(500).json({ message: 'Error deleting video file', error: error.message });
     }
 };
 
