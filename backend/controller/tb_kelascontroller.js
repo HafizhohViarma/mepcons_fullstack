@@ -108,3 +108,22 @@ exports.deleteKelas = async (req, res) => {
         return res.status(500).json({ message: 'Terjadi kesalahan saat menghapus kelas' });
     }
 };
+
+exports.countKelas = async (req, res) => {
+    try {
+        
+        const count = await Kelas.count();
+
+        
+        res.status(200).json({
+            message: 'Total kelas',
+            count: count
+        });
+    } catch (error) {
+        console.error('Error counting kelas:', error);
+        res.status(500).json({
+            message: 'Error counting kelas',
+            error: error.message
+        });
+    }
+};
