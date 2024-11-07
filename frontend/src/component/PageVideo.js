@@ -43,6 +43,15 @@ const PageVideo = () => {
     }
   };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+
   return (
     <div className="dashboard">
       {/* Sidebar */}
@@ -85,7 +94,7 @@ const PageVideo = () => {
                     <button>Detail</button>
                   </Link>
                 </td>
-                <td>{`Rp ${video.harga_video}`}</td>
+                <td>{formatPrice(video.harga_video)}</td>
                 <td>
                   <Link to={`/edit-video/${video.id_video}`}>
                     <button className="button is-small is-info">Edit</button>

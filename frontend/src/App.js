@@ -23,6 +23,9 @@ import LandingPage from "./component/landing/LandingPage";
 import DaftarKelas from "./component/see/DaftarKelas";
 import DaftarVideo from "./component/see/DaftarVideo";
 import Dashboard from "./component/user/Dashboard";
+import VideoPaid from "./component/user/VideoPaid";
+import KelasPaid from "./component/user/KelasPaid";
+import EbookPaid from "./component/user/EbookPaid";
 
 function App() {
   return (
@@ -43,7 +46,7 @@ function App() {
         
         {/* dihalaman Detail Video */}
         <Route path="/add-videos/:id" element={<AddVideos />} />
-        <Route path="/edit-videos/:id" element={<EditVideos/>}/>
+        <Route path="edit-videos/:id/:id_file" element={<EditVideos/>}/>
 
         {/* Kelas */}
         <Route path="/edit-kelas/:id" element={<EditKelas/>}/>
@@ -65,6 +68,9 @@ function App() {
 
         {/* Halaman Sidebar User */}
         <Route path="/service-purchased" element={<Dashboard/>}/>
+        <Route path="/video-paid" element={<VideoPaid/>}/>
+        <Route path="/kelas-paid" element={<KelasPaid/>}/>
+        <Route path="/ebook-paid" element={<EbookPaid/>}/>
       </Routes>
     </BrowserRouter>
   );
