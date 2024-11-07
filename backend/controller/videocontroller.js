@@ -265,5 +265,29 @@ exports.deleteVideoFile = async (req, res) => {
         res.status(500).json({ message: 'Error deleting video file', error: error.message });
     }
 };
+// Menghitung jumlah video yang ada
+exports.countVideos = async (req, res) => {
+    try {
+        // Menghitung jumlah video berdasarkan id_video
+        const count = await Video.count({
+            distinct: true,  // Hanya menghitung id_video yang unik
+            col: 'id_video'  // Menghitung berdasarkan kolom id_video
+        });
+
+        // Mengirimkan response dengan jumlah video
+        res.status(200).json({
+            message: 'Total videos',
+            count: count
+        });
+    } catch (error) {
+        // Menangani error jika terjadi
+        console.error('Error counting videos:', error);
+        res.status(500).json({
+            message: 'Error counting videos',
+            error: error.message
+        });
+    }
+};
+
 
 ////

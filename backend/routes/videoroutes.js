@@ -31,5 +31,8 @@ router.put('/videos/:id_video/videoFiles/:id_file', upload.single('video_file'),
 
 router.delete('/videos/:id_video/videoFiles/:id_file', videoController.deleteVideoFile);
 
+router.get('/count', videoController.countVideos);  // Menyesuaikan rute menjadi /videos/count
+
+
+
 module.exports = router;
-//////ancok
