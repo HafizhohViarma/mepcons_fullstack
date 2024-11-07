@@ -37,7 +37,7 @@ const PageDetailVideo = () => {
 
     const deleteFile = async () => {
         try {
-            await axios.delete(`http://localhost:8082/api/files/${selectedFileId}`);
+            await axios.delete(`http://localhost:8082/api/videos/${id}/videoFiles/${selectedFileId}`);
             setVideoDetail((prevState) => ({
                 ...prevState,
                 files: prevState.files.filter(file => file.id_file !== selectedFileId)

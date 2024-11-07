@@ -18,7 +18,7 @@ const EditVideos = () => {
                 const file = response.data.files.find(f => f.id_file === id_file);
                 if (file) {
                     setSubJudul(file.sub_judul);
-                    setVideoFile(file.video_file);  // Menampilkan file video yang sudah ada
+                    setVideoFile(file.video_file);  
                 }
                 setLoading(false);
             } catch (error) {
