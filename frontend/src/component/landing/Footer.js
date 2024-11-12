@@ -26,16 +26,16 @@ const Footer = () => {
                         <h4 className="widget-title mb-4 text-light fw-bold">Tautan</h4>
                         <ul className="list-unstyled">
                         <li className="mb-2">
-                            <a href="#!" className="link-light text-decoration-none">Beranda</a>
+                            <a href="/" className="link-light text-decoration-none">Beranda</a>
                         </li>
                         <li className="mb-2">
-                            <a href="#!" className="link-light text-decoration-none">Daftar Kelas</a>
+                            <a href="#kelas" className="link-light text-decoration-none">Daftar Kelas</a>
                         </li>
                         <li className="mb-2">
-                            <a href="#!" className="link-light text-decoration-none">Tentang Kami</a>
+                            <a href="#about-us" className="link-light text-decoration-none">Tentang Kami</a>
                         </li>
                         <li className="mb-2">
-                            <a href="#!" className="link-light text-decoration-none">Testimoni</a>
+                            <a href="#testimoni" className="link-light text-decoration-none">Testimoni</a>
                         </li>
                         </ul>
                     </div>

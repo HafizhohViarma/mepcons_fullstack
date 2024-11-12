@@ -173,7 +173,7 @@ const LandingPage = () => {
       </section>
 
       {/* Kelas Section */}
-      <section className="kelas">
+      <section className="kelas" id="kelas">
         <div className="container">
           <h2 className="text-center">Kelas / Produk Terpopuler</h2>
           <p>
