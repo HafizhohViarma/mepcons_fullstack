@@ -83,3 +83,47 @@ p {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
+
+/* style.css */
+
+/* Navbar Styling */
+.navbar.user {
+  background-color: #007bff; /* Warna Biru */
+  padding: 10px 20px;
+  border-bottom: 2px solid #0056b3; /* Warna garis bawah navbar */
+}
+
+/* Navbar Items */
+.navbar-item {
+  color: #fff; /* Teks putih pada item navbar */
+}
+
+.navbar-item:hover {
+  color: #ffd700; /* Warna kuning saat hover */
+  text-decoration: underline;
+}
+
+/* Dropdown Menu */
+.navbar-item.has-dropdown:hover .navbar-dropdown {
+  display: block;
+}
+
+.navbar-dropdown {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 100;
+}
+
+/* Dropdown Item Styling */
+.navbar-dropdown .navbar-item {
+  padding: 10px;
+  color: #333; /* Warna teks item dropdown */
+}
+
+.navbar-dropdown .navbar-item:hover {
+  background-color: #ffd700; /* Warna kuning saat hover pada item dropdown */
+  color: #333; /* Teks dropdown menjadi gelap saat hover */
+}

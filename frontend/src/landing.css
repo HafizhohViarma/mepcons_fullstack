@@ -412,7 +412,7 @@ h3 .slider{
   padding-top: 55px;
 }
 
-/* Tambahkan ini di file CSS Anda */
+/* Menjaga modal tetap terpusat */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -426,14 +426,53 @@ h3 .slider{
   z-index: 1000;
 }
 
+/* Mengatur modal-content untuk menampilkan konten kiri dan gambar di tengah */
 .modal-content {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  text-align: center;
+  padding: 30px 50px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Mengatur konten agar di kiri */
+  justify-content: flex-start;
+  width: 500px; /* Atur lebar sesuai kebutuhan */
+  position: relative;
 }
 
+/* Membuat gambar berada di tengah */
+.modal-logo {
+  align-self: center; /* Gambar di tengah */
+  max-width: 200px;
+  margin-bottom: 20px; /* Memberikan jarak antara gambar dan konten */
+}
+
+.detail{
+  align-self: center;
+  color: #000000;
+}
+
+/* Menyesuaikan tombol */
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 100%; 
+}
+
+/* Memperbesar font pada h2 dan h4 */
+.modal-overlay .modal-content h2 {
+  font-size: 27px;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 15px;
+}
+
+.modal-overlay .modal-content h4 {
+  font-size: 23px;
+}
+
+/* Mengatur button close */
 .close-button {
   cursor: pointer;
   font-size: 24px;
@@ -442,7 +481,20 @@ h3 .slider{
   right: 15px;
 }
 
-.modal-buttons {
-  margin-top: 20px;
+/* Mengatur harga supaya berada di kiri */
+.modal-overlay .modal-content .text-danger {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px; 
+  width: 100%; 
+  display: flex;
+  justify-content: flex-start; 
 }
+
+.dashed-line {
+  border-bottom: 2px dashed #000; 
+  margin: 15px 0; 
+}
+
+
 

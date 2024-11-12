@@ -39,7 +39,7 @@ const Navbar = () => {
                   <a className="nav-link" href="/service-purchased">Saya</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/">Masuk / Daftar</a>
+                  <a className="nav-link" href="/login">Masuk / Daftar</a>
                 </li>
               </ul>
             </div>

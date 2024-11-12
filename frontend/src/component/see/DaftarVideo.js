@@ -2,11 +2,17 @@ import Footer from '../landing/Footer';
 import React, { useEffect, useState } from 'react';
 import logo from '../../img/mepcons_metro-logo.png';
 import axios from 'axios';
-import '../../landing.css'; 
+import '../../landing.css';
+import ModalVideo from './ModalVideo'; 
+import ModalEbook from './ModalEbook';
 
 const DaftarVideo = () => {
   const [video, setVideo] = useState([]);
   const [ebook, setEbook] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEbook, setSelectedEbook] = useState(null);
+  const [isEbookModalOpen, setIsEbookModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,6 +55,26 @@ const DaftarVideo = () => {
       currency: 'IDR',
       minimumFractionDigits: 0,
     }).format(price);
+  };
+
+  const openModal = (videos) => {
+    setSelectedVideo(videos);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedVideo(null);
+  };
+
+  const openEbookModal = (ebookItem) => {
+    setSelectedEbook(ebookItem);
+    setIsEbookModalOpen(true);
+  };
+
+  const closeEbookModal = () => {
+    setIsEbookModalOpen(false);
+    setSelectedEbook(null);
   };
 
   return (
@@ -107,7 +133,7 @@ const DaftarVideo = () => {
       <section className="video_section mb-5">
         <div className="container">
           <div className="row mt-5">
-          <strong className="text-center mb-5">Daftar Video</strong>
+            <strong className="text-center mb-5">Daftar Video</strong>
             {video.map((videos, indexBoz) => (
               <div className="col-md-4 mb-4" key={indexBoz}>
                 <div className="card">
@@ -115,7 +141,7 @@ const DaftarVideo = () => {
                   <div className="card-body">
                     <h4 className="card-title">{videos.judul_video}</h4>
                     <div className="d-flex justify-content-between align-items-center">
-                      <a href="detail_video1.php" className="btn btn-primary">Detail</a>
+                      <button onClick={() => openModal(videos)} className="btn btn-primary">Detail</button>
                       <p className="text-danger mb-0">{formatPrice(videos.harga_video)}</p>
                     </div>
                   </div>
@@ -125,6 +151,8 @@ const DaftarVideo = () => {
           </div>
         </div>        
       </section>
+
+      <ModalVideo isOpen={isModalOpen} onClose={closeModal} videos={selectedVideo} />
       
       <section className="ebook_section mb-5">
         <div className="container">
@@ -137,7 +165,7 @@ const DaftarVideo = () => {
                   <div className="card-body">
                     <h3 className="card-title">{e.judul_ebook}</h3>
                     <div className="d-flex justify-content-between align-items-center">
-                      <a href="detail_video1.php" className="btn btn-primary">Detail</a>
+                      <button onClick={() => openEbookModal(e)} className="btn btn-primary">Detail</button>
                       <p className="text-danger mb-0">{formatPrice(e.harga_ebook)}</p>
                     </div>
                   </div>
@@ -147,6 +175,8 @@ const DaftarVideo = () => {
           </div>
         </div>        
       </section>
+
+      <ModalEbook isOpen={isEbookModalOpen} onClose={closeEbookModal} e={selectedEbook} />
 
       <section>
         <Footer/>

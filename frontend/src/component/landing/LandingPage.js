@@ -17,6 +17,8 @@ const LandingPage = () => {
   const [ebook, setEbook] = useState([]);
   const [kelas, setKelas] = useState([]);
   const [testimoni, setTestimoni] = useState([]);
+  const [videoCount, setVideoCount] = useState(0);
+  const [kelasCount, setKelasCount] = useState(0);
 
   useEffect(() => {
     const getVideos = async () => {
@@ -58,6 +60,27 @@ const LandingPage = () => {
       }
     };
     getTestimoni();
+
+    const fetchVideoCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:8082/api/count/videos');
+        setVideoCount(response.data.count);
+      } catch (error) {
+        console.error('Error fetching video count:', error);
+      }
+    };
+    fetchVideoCount();
+
+    const fetchKelasCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:8082/api/count/kelas');
+        setKelasCount(response.data.count);
+      } catch (error) {
+        console.error('Error fetching class count:', error);
+      }
+    };
+    
+    fetchKelasCount();
   }, []);
 
   const formatPrice = (price) => {
@@ -126,10 +149,10 @@ const LandingPage = () => {
             <div className="col-md-4">
               <div className="card-item">
                 <div className="card-icon">
-                  <i className="fas fa-video"></i> 
+                  <i className="fas fa-video"></i>
                 </div>
                 <div className="card-content">
-                  <h4>50</h4>
+                  <h4>{videoCount}</h4>
                   <p>Video Pembelajaran</p>
                 </div>
               </div>
@@ -140,7 +163,7 @@ const LandingPage = () => {
                   <i className="fas fa-graduation-cap"></i> 
                 </div>
                 <div className="card-content">
-                  <h4>230</h4>
+                <h4>{kelasCount}</h4>
                   <p>Kelas Terpadu</p>
                 </div>
               </div>

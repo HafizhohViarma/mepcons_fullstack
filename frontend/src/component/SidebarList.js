@@ -12,7 +12,7 @@
             <img src={logo} alt="Logo" className="logo-image" />
         </div>
         <ul className="menu">
-            <li><i className="fas fa-tachometer-alt"></i><Link to="/"> Dashboard </Link></li>
+            <li><i className="fas fa-tachometer-alt"></i><Link to="/admin"> Dashboard </Link></li>
             <li><i className="fas fa-video"></i><Link to="/video"> Video </Link></li> 
             <li><i className="fas fa-book"></i><Link to="/ebook"> Ebook </Link></li>
             <li><i className="fas fa-chalkboard-teacher"></i><Link to="/kelas"> Kelas </Link></li>

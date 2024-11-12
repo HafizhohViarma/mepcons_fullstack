@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../img/mepcons-blue.png';
 import { FaSquareCheck, FaShopify } from "react-icons/fa6";
 
-const ModalKelas = ({ isOpen, onClose, kelas }) => {
+const ModalVideo = ({ isOpen, onClose, videos }) => {
   if (!isOpen) return null;
 
   const formatPrice = (price) => {
@@ -18,9 +18,8 @@ const ModalKelas = ({ isOpen, onClose, kelas }) => {
       <div className="modal-content">
         <span className="close-button" onClick={onClose}>×</span>
         <img src={logo} alt="Logo" className="modal-logo" />
-        <h2 className='fw-bold'>{kelas.judul_kelas}</h2>
-        <p>Jadwal : {kelas.jadwal}</p><br></br>
-        <p>{kelas.deskripsi_kelas}</p><br></br>
+        <h2 className='fw-bold'>{videos.judul_video}</h2>
+        <p>{videos.keterangan_video}</p><br></br>
 
         <p><FaSquareCheck /> Video Playback</p>
         <p><FaSquareCheck /> E-Certificate</p>
@@ -30,7 +29,7 @@ const ModalKelas = ({ isOpen, onClose, kelas }) => {
         </br>
 
         {/* Harga yang berada di kiri */}
-        <p className="text-danger">{formatPrice(kelas.harga_kelas)}</p>
+        <p className="text-danger">{formatPrice(videos.harga_video)}</p>
 
         {/* Tombol Batal dan Beli sejajar */}
         <div className="modal-buttons">
@@ -42,4 +41,4 @@ const ModalKelas = ({ isOpen, onClose, kelas }) => {
   );
 };
 
-export default ModalKelas;
+export default ModalVideo;
