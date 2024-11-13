@@ -6,7 +6,7 @@ const path = require('path');
 
 const app = express();
 
-// Middleware untuk memudahkan parsing request body (JSON dan URL-encoded)
+
 app.use(express.json({ limit: '500mb' })); 
 app.use(express.urlencoded({ limit: '500mb', extended: true }));
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ limit: '500mb', extended: true }));
 app.use(cors({
   origin: 'http://localhost:3000', 
 }));
-// Menyajikan file statis dari folder 'uploads'
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Simple route untuk tes
@@ -30,7 +30,7 @@ const kelasRoutes = require('./routes/tb_kelasroutes.js');
 app.use('/api', kelasRoutes);
 
 // Import dan gunakan routes Testimoni
-const testiRoutes = require('./routes/tb_testiroutes.js'); // Pastikan path sesuai
+const testiRoutes = require('./routes/tb_testiroutes.js');
 app.use('/api', testiRoutes);
 
 const tbEbookRoutes = require('./routes/tb_ebookroutes.js');
@@ -39,7 +39,8 @@ app.use('/api/ebooks', tbEbookRoutes);
 const videoRoutes = require('./routes/videoroutes.js');
 app.use('/api', videoRoutes);
 
-
+const transactionRoutes = require('./routes/tb_transaksiroutes.js');
+app.use('/api', transactionRoutes);
 
 
 // Port dimana server akan dijalankan

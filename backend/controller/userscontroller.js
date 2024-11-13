@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 const { Users } = require('../models'); 
 const uploads = require('../midelwares/uploads.js'); 
 
+
 // Secret key untuk JWT
-const SECRET_KEY = 'your_secret_key'; 
+const SECRET_KEY = 'aGz#91Z6!Tnkb*5w4YmvR$2p7bqLo#Fw'; 
 
 // Pendaftaran pengguna dengan upload foto profil
 exports.register = async (req, res) => {
@@ -131,4 +132,11 @@ exports.deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+};
+
+// Menghapus token dari klien (logout)
+exports.logout = (req, res) => {
+    
+    res.clearCookie('token'); 
+    res.status(200).json({ message: 'Logout berhasil, token telah dihapus.' });
 };

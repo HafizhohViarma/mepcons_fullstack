@@ -3,7 +3,7 @@ module.exports = {
     HOST: 'localhost',
     USER: 'root',
     PASSWORD: '',
-    DB: 'mapcons_db',
+    DB: 'mapcons',
     dialect: 'mysql',
     pool: {
       max: 5,
