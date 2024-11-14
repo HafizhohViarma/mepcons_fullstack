@@ -2,6 +2,8 @@ import SidebarList from './SidebarList';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
 
 const PageTestimoni = () => {
   const [testimoni, setTestimoni] = useState([]);
@@ -57,7 +59,7 @@ const PageTestimoni = () => {
         {/* Button Add Video */}
         <div style={{ marginBottom: '20px' }}>
           <Link to="/add-testi">
-            <button className="button is-primary">Add Testimoni</button>
+            <button className="button is-primary">+ Add Testimoni</button>
           </Link>
         </div>
 
@@ -83,12 +85,12 @@ const PageTestimoni = () => {
                 <td>{testi.testimoni  }</td> 
                 <td>
                   <Link to={`/edit-testimoni/${testi.id_testi}`}>
-                    <button className="button is-small is-info">Edit</button>
+                    <button className="button is-small is-info mr-2"><FaRegEdit />Edit</button>
                   </Link>
 
                   <button 
                   onClick={() => handleDeleteClick(testi.id_testi)}
-                  className="button is-small is-danger">Hapus</button>
+                  className="button is-small is-danger"><MdOutlineDelete /> Hapus</button>
                 </td>
               </tr>
             ))}

@@ -4,6 +4,7 @@ import SidebarList from "./SidebarList";
 import '../style.css';
 import { Link, useNavigate } from "react-router-dom"; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { IoMdArrowBack } from "react-icons/io";
 
 const AddVideo = () => {
   const [judul_video, setJudul] = useState("");
@@ -74,7 +75,7 @@ const AddVideo = () => {
       
       <div className="content" style={{ padding: '30px' }}>
         <Link to="/video">
-          <button className="btn btn-warning mb-3">Kembali</button>
+          <button className="btn btn-warning mb-3"><IoMdArrowBack /> Kembali</button>
         </Link>
         
         <h2 className="text-center mb-4">Form Tambah Video</h2>
@@ -140,7 +141,7 @@ const AddVideo = () => {
           </div>
 
           <button type="submit" className="btn btn-primary mt-3" disabled={loading}>
-            {loading ? 'Loading...' : 'Add Video'}
+            {loading ? 'Loading...' : '+ Add Video'}
           </button>
         </form>
       </div>

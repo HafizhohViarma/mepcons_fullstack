@@ -10,6 +10,9 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css'; 
+import ModalVideo from '../see/ModalVideo';
+import ModalKelas from '../see/ModalKelas';
+import ModalEbook from '../see/ModalEbook';
 
 
 const LandingPage = () => {
@@ -19,6 +22,10 @@ const LandingPage = () => {
   const [testimoni, setTestimoni] = useState([]);
   const [videoCount, setVideoCount] = useState(0);
   const [kelasCount, setKelasCount] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedEbook, setSelectedEbook] = useState(null);
+  const [selectedKelas, setSelectedKelas] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const getVideos = async () => {
@@ -97,6 +104,32 @@ const LandingPage = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+  };
+
+  // Fungsi untuk membuka modal video
+  const openModalVideo = (video) => {
+    setSelectedVideo(video);
+    setIsModalOpen(true);
+  };
+
+  // Fungsi untuk membuka modal ebook
+  const openModalEbook = (ebookItem) => {
+    setSelectedEbook(ebookItem);
+    setIsModalOpen(true);
+  };
+
+  // Fungsi untuk membuka modal kelas
+  const openModalKelas = (kelasItem) => {
+    setSelectedKelas(kelasItem);
+    setIsModalOpen(true);
+  };
+
+  // Fungsi untuk menutup modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedVideo(null);
+    setSelectedEbook(null);
+    setSelectedKelas(null);
   };
 
   return (
@@ -195,9 +228,9 @@ const LandingPage = () => {
                     <img src={video.sampul_video} alt="Poster" className="poster-image" />
                     <h3 className="mt-2 mb-2">{video.judul_video}</h3>
                     <div className="d-flex justify-content-between">
-                    <a href="detail_video1.php" className="btn-detail">
+                    <button onClick={() => openModalVideo(video)} className="btn-detail">
                       <i className="fas fa-hand-point-right"></i> Detail
-                    </a>
+                    </button>
                       <p className="text-danger">{formatPrice(video.harga_video)}</p>
                     </div>
                   </div>
@@ -216,9 +249,9 @@ const LandingPage = () => {
                     <img src={item.sampul_ebook} alt="Poster" className="poster-image" />
                     <h3 className="mt-2 mb-2">{item.judul_ebook}</h3>
                     <div className="d-flex justify-content-between">
-                      <a href="detail_video1.php" className="btn-detail">
+                      <button onClick={() => openModalEbook(item)} className="btn-detail">
                       <i className="fas fa-hand-point-right"></i> Detail
-                      </a>
+                      </button>
                       <p className="text-danger">{formatPrice(item.harga_ebook)}</p>
                     </div>
                   </div>
@@ -237,9 +270,9 @@ const LandingPage = () => {
                     <img src={kelasItem.sampul_kelas} alt="Poster" className="poster-image" />
                     <h3 className="mt-2 mb-2">{kelasItem.judul_kelas}</h3>
                     <div className="d-flex justify-content-between">
-                      <a href="detail_video1.php" className="btn-detail">
+                      <button onClick={() => openModalKelas(kelasItem)} className="btn-detail">
                       <i className="fas fa-hand-point-right"></i> Detail
-                      </a>
+                    </button>
                       <p className="text-danger">{formatPrice(kelasItem.harga_kelas)}</p>
                     </div>
                   </div>
@@ -259,6 +292,21 @@ const LandingPage = () => {
         </div>        
         </div>        
       </section>
+
+      {/* Modal untuk Video */}
+      {selectedVideo && (
+        <ModalVideo isOpen={isModalOpen} onClose={closeModal} videos={selectedVideo} />
+      )}
+      
+      {/* Modal untuk Ebook */}
+      {selectedEbook && (
+        <ModalEbook isOpen={isModalOpen} onClose={closeModal} ebook={selectedEbook} />
+      )}
+
+      {/* Modal untuk Kelas */}
+      {selectedKelas && (
+        <ModalKelas isOpen={isModalOpen} onClose={closeModal} kelas={selectedKelas} />
+      )}
 
 
       <section>

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
+import { IoMdArrowBack } from "react-icons/io";
 
 const AddKelas = () => {
     const [judul_kelas, setJudulKelas] = useState('');
@@ -47,10 +48,10 @@ const AddKelas = () => {
         
       <div className="content" style={{ padding: '30px' }}>
             <Link to="/kelas">
-                <button className="button is-warning">Kembali</button>
+                <button className="button is-warning"><IoMdArrowBack /> Kembali</button>
             </Link>
         <h2 className="text-center">Add Kelas</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
           <div className="form-group">
             <label>Judul Kelas</label>
             <input
@@ -100,7 +101,7 @@ const AddKelas = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary mt-3">Add Kelas</button>
+          <button type="submit" className="btn btn-primary mt-3">+ Add Kelas</button>
         </form>
       </div>
     </div>

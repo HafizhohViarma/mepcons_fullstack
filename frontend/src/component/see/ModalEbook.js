@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../img/mepcons-blue.png';
 import { FaSquareCheck, FaShopify } from "react-icons/fa6";
 
-const ModalEbook = ({ isOpen, onClose, e }) => {
+const ModalEbook = ({ isOpen, onClose, ebook }) => {
   if (!isOpen) return null;
 
   const formatPrice = (price) => {
@@ -18,8 +18,8 @@ const ModalEbook = ({ isOpen, onClose, e }) => {
       <div className="modal-content">
         <span className="close-button" onClick={onClose}>×</span>
         <img src={logo} alt="Logo" className="modal-logo" />
-        <h2 className='fw-bold'>{e.judul_ebook}</h2>
-        <p>{e.deskripsi_ebook}</p><br></br>
+        <h2 className='fw-bold'>{ebook.judul_ebook}</h2>
+        <p>{ebook.deskripsi_ebook}</p><br></br>
 
         <p><FaSquareCheck /> Video Playback</p>
         <p><FaSquareCheck /> E-Certificate</p>
@@ -29,7 +29,7 @@ const ModalEbook = ({ isOpen, onClose, e }) => {
         </br>
 
         {/* Harga yang berada di kiri */}
-        <p className="text-danger">{formatPrice(e.harga_ebook)}</p>
+        <p className="text-danger">{formatPrice(ebook.harga_ebook)}</p>
 
         {/* Tombol Batal dan Beli sejajar */}
         <div className="modal-buttons">

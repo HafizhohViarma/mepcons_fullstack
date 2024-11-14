@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import SidebarList from './SidebarList';
+import { IoMdArrowBack } from "react-icons/io";
 
 const AddEbook = () => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const AddEbook = () => {
 
       <div className="content" style={{ padding: '30px' }}>
         <Link to="/ebook">
-          <button className="button is-warning">Kembali</button>
+          <button className="button is-warning"><IoMdArrowBack /> Kembali</button>
         </Link>
         <h2 className="text-center">Form Tambah E-Book</h2>
 
@@ -122,7 +123,7 @@ const AddEbook = () => {
 
           <div className="field">
             <div className="control">
-              <button className="button is-primary" type="submit">Tambah E-Book</button>
+              <button className="button is-primary" type="submit">+ Tambah E-Book</button>
             </div>
           </div>
         </form>
