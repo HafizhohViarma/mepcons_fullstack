@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define('Users', {
       id_user: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
         autoIncrement: true,
         defaultValue: () => uuidv4(),
@@ -32,14 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      otp: {
-        type: DataTypes.STRING(6),
-        allowNull: true
-      },
-      otp_expiration: {
-        type: DataTypes.DATE,
-        allowNull: true
-      }
+     
     }, {
       tableName: 'users',
       timestamps: false

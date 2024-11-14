@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./models'); 
 const path = require('path'); 
+require('dotenv').config();
+
+
+
 
 const app = express();
 
@@ -24,7 +28,8 @@ app.get('/', (req, res) => {
 
 // impor
 const userRoutes = require('./routes/usersroutes.js'); 
-app.use('/api/users', userRoutes); 
+app.use('/api/users', userRoutes);
+
 
 const kelasRoutes = require('./routes/tb_kelasroutes.js');
 app.use('/api', kelasRoutes);
@@ -44,7 +49,7 @@ app.use('/api', transactionRoutes);
 
 
 // Port dimana server akan dijalankan
-const PORT = process.env.PORT || 8082;
+const PORT = process.env.PORT || 8080;
 
 // Start server
 app.listen(PORT, () => {

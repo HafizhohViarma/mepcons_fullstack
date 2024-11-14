@@ -90,6 +90,7 @@ exports.getDetailVideo = async (req, res) => {
             files: video.file.map(f => ({
                 sub_judul: f.sub_judul,
                 video_file: f.video_file,
+                id_file: id_file
             })),
         };
 
@@ -270,11 +271,11 @@ exports.countVideos = async (req, res) => {
     try {
         // Menghitung jumlah video berdasarkan id_video
         const count = await Video.count({
-            distinct: true,  // Hanya menghitung id_video yang unik
-            col: 'id_video'  // Menghitung berdasarkan kolom id_video
+            distinct: true,  
+            col: 'id_video'  
         });
 
-        // Mengirimkan response dengan jumlah video
+        
         res.status(200).json({
             message: 'Total videos',
             count: count

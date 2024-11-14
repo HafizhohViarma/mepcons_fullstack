@@ -1,27 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controller/userscontroller.js');
-const upload = require('../midelwares/uploads.js'); 
+const userController = require('../controller/userscontroller.js'); // Pastikan path ini benar
+const authMiddleware = require('../midelwares/authMiddleware.js'); // Pastikan path ini benar
+const uploads = require('../midelwares/uploads.js'); // Pastikan path ini benar
+// Register user
+router.post('/register', userController.registerUser);
 
-router.post('/register', upload.single('profil'), userController.register);
-// Rute untuk login
-router.post('/login', userController.login);
+// Login user
+router.post('/login', userController.loginUser);
 
-router.get('/profile', userController.authenticate, (req, res) => {
-    res.json({
-        message: 'selamat datang admin',
-        userId: req.userId,     
-        userLevel: req.userLevel 
-    });
-});
+// Protected route (harus login terlebih dahulu)
+router.get('/profile', authMiddleware.authenticate, userController.getUserProfile);
 
+// Get all users (Admin hanya)
 router.get('/', userController.getAllUsers);
 
-router.use(userController.authenticate); 
+// Get user by ID (Admin atau user sendiri)
+router.get('/users/:id', authMiddleware.authenticate, userController.getUserById);
 
-router.delete('/users/:id', userController.deleteUser);
+// Edit user (Admin atau user sendiri)
+router.put('/:id', authMiddleware.authenticate, userController.editUser);
 
-router.put('/users/:id/profil', upload.single('profil'), userController.updateProfile);
+// Delete user by ID (Admin saja)
+router.delete('/:id', userController.deleteUser);
 
-router.post('/logout', userController.logout);
+// Upload foto user (Admin atau user sendiri)
+router.post('/upload-foto/:id', uploads.single('file'), userController.uploadUserPhoto);
+
+router.get('/count/users', userController.countUsers);
 module.exports = router;

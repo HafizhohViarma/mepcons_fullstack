@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_video: {
       type: DataTypes.STRING,
-      allowNull: true, // Diubah ke allowNull: true karena tidak selalu terisi
+      allowNull: true, 
     },
     id_ebook: {
       type: DataTypes.STRING,
