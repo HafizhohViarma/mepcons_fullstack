@@ -2,6 +2,8 @@ import SidebarList from './SidebarList';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MdOutlineDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 
 const PageEbook = () => {
   const [ebook, setEbook] = useState([]);
@@ -66,7 +68,7 @@ const PageEbook = () => {
         {/* Button Add E-Book */}
         <div style={{ marginBottom: '20px' }}>
           <Link to="/add-ebook">
-            <button className="button is-primary">Add E-Book</button>
+            <button className="button is-primary">+ Add E-Book</button>
           </Link>
         </div>
 
@@ -100,11 +102,11 @@ const PageEbook = () => {
                 <td>{formatPrice(ebook.harga_ebook)}</td> 
                 <td>
                   <Link to={`/edit-ebook/${ebook.id_ebook}`}>
-                    <button className="button is-small is-info">Edit</button>
+                    <button className="button is-small is-info mb-2"><FaRegEdit />Edit</button>
                   </Link>
                   <button 
                   onClick={() => handleDeleteClick(ebook.id_ebook)}
-                  className="button is-small is-danger">Hapus</button>
+                  className="button is-small is-danger"><MdOutlineDelete />Hapus</button>
                 </td>
               </tr>
             ))}

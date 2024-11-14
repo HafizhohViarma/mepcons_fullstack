@@ -6,9 +6,12 @@ import ModalDetail from './ModalKelas';
 import logo from '../../img/mepcons_metro-logo.png';
 
 const DaftarKelas = () => {
-  const [kelas, setKelas] = useState([]);
+  const [kelas, setKelas] = useState([]);  // Data kelas yang diambil dari API
+  const [filteredKelas, setFilteredKelas] = useState([]);  // Data kelas yang sudah difilter
+  const [searchTerm, setSearchTerm] = useState("");  // Term pencarian
   const [selectedKelas, setSelectedKelas] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +30,8 @@ const DaftarKelas = () => {
   const getKelas = async () => {
     try {
       const response = await axios.get('http://localhost:8082/api/kelas');
-      setKelas(response.data); 
+      setKelas(response.data);
+      setFilteredKelas(response.data); // Set kelas yang diterima ke state filteredKelas
     } catch (error) {
       console.error('Error fetching class:', error); 
     }
@@ -51,6 +55,36 @@ const DaftarKelas = () => {
     setSelectedKelas(null);
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token); // Set isLoggedIn ke true jika token ada
+  }, []);
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Apakah Anda yakin ingin logout dari laman ini?");
+    if (confirmLogout) {
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+      window.location.href = '/login';
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    filterKelas(e.target.value);
+  };
+
+  const filterKelas = (term) => {
+    if (term === "") {
+      setFilteredKelas(kelas);  // Jika pencarian kosong, tampilkan semua kelas
+    } else {
+      const filtered = kelas.filter(kelas => 
+        kelas.judul_kelas.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredKelas(filtered);  // Update kelas yang sesuai dengan pencarian
+    }
+  };
+
   return (
     <div>
       <header className="header_area">
@@ -62,17 +96,27 @@ const DaftarKelas = () => {
             <div className="collapse navbar-collapse offset" id="navbarSupportedContent">
               <ul className="nav navbar-nav menu_nav ml-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/landing-page">Beranda</a>
+                  <a className="nav-link" href="/">Beranda</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/daftar-video">Daftar Video & E-Book</a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/">Saya</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/">Masuk / Daftar</a>
-                </li>
+                {isLoggedIn && (
+                  <li className="nav-item">
+                    <a className="nav-link" href="/service-purchased">Saya</a>
+                  </li>
+                )}
+                {isLoggedIn ? (
+                  <li className="nav-item">
+                    <button className="nav-link" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <a className="nav-link" href="/login">Masuk / Daftar</a>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
@@ -95,8 +139,14 @@ const DaftarKelas = () => {
       <section>
         <div className="container search">
           <form method="POST" action="" className="input-group mb-3">
-            <input type="text" name="search" placeholder="Cari kelas..." className="form-control rounded"/>
-            <button type="submit" className="btn btn-outline-primary">Cari</button>
+            <input 
+              type="text" 
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Cari kelas..." 
+              className="form-control rounded"
+            />
+            <button type="button" className="btn btn-outline-primary">Cari</button>
           </form>
         </div>
       </section>
@@ -104,7 +154,7 @@ const DaftarKelas = () => {
       <section className="kelas_section mb-5">
         <div className="container">
           <div className="row mt-5">
-            {kelas.map((kelasBro, indexBos) => (
+            {filteredKelas.map((kelasBro, indexBos) => (
               <div className="col-md-4 mb-4" key={indexBos}>
                 <div className="card">
                   <img src={kelasBro.sampul_kelas} alt="Logo" className="poster-image card-img-top" />

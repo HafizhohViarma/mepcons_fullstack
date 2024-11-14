@@ -3,6 +3,9 @@ import SidebarList from './SidebarList';
 import { Link, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
+import { IoMdArrowBack } from "react-icons/io";
 
 const PageDetailVideo = () => {
     const { id } = useParams();
@@ -66,10 +69,10 @@ const PageDetailVideo = () => {
                 
                 <div style={{ marginBottom: '20px' }}>
                     <Link to="/video">
-                        <button className="button is-warning">Kembali</button>
+                        <button className="button is-warning"><IoMdArrowBack /> Kembali</button>
                     </Link>
                     <Link to={`/add-videos/${id}`}>
-                        <button className="button is-primary ml-3">Tambah Video</button>
+                        <button className="button is-primary ml-3">+ Tambah Video</button>
                     </Link>
                 </div>
 
@@ -97,12 +100,12 @@ const PageDetailVideo = () => {
                                         </td>
                                         <td>
                                             <Link to={`/edit-videos/${id}/${file.id_file}`}>
-                                                <button className="button is-small is-info">Edit</button>
+                                                <button className="button is-small is-info mr-2"><FaRegEdit /> Edit</button>
                                             </Link>
                                             <button
                                                 onClick={() => handleDeleteClick(file.id_file)}
                                                 className="button is-small is-danger"
-                                            >
+                                            > <MdOutlineDelete />
                                                 Hapus
                                             </button>
                                         </td>

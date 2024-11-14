@@ -3,6 +3,7 @@ import SidebarList from './SidebarList';
 import axios from 'axios';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { IoMdArrowBack } from "react-icons/io";
 
 const EditTestimoni = () => {
   const [namaPeserta, setNamaPeserta] = useState('');
@@ -54,10 +55,10 @@ const EditTestimoni = () => {
       <SidebarList />
       <div className="content" style={{ padding: '30px' }}>
         <Link to="/testimoni">
-          <button className="btn btn-warning">Kembali</button>
+          <button className="btn btn-warning"><IoMdArrowBack /> Kembali</button>
         </Link>
         <h2 className="text-center">Edit Testimoni</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
           <div className="form-group">
             <label>Nama Peserta</label>
             <input

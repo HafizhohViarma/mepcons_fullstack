@@ -29,6 +29,8 @@
   import EbookPaid from "./component/user/EbookPaid";
   import Login from "./component/Login";
   import Register from "./component/Register";
+import AddUser from "./component/AddUser";
+import EditUser from "./component/EditUser";
 
   function App() {
     return (
@@ -59,6 +61,10 @@
           {/* E-Book */}
           <Route path="/edit-ebook/:id" element={<EditEbook/>}/>
           <Route path="/add-ebook" element={<AddEbook/>}/>
+
+          {/* User */}
+          <Route path="/add-user" element={<AddUser/>}/>
+          <Route path="/edit-user/:id" element={<EditUser/>}/>
 
           {/* Testimoni */}
           <Route path="/add-testi" element={<AddTestimoni/>}/>

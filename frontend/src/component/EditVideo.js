@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import SidebarList from './SidebarList';
+import { IoMdArrowBack } from "react-icons/io";
 
 const EditVideo = () => {
     const { id } = useParams();
@@ -70,7 +71,7 @@ const EditVideo = () => {
             <SidebarList />
             <div className="content" style={{ padding: '30px' }}>
                 <Link to="/video">
-                    <button className="button is-warning">Kembali</button>
+                    <button className="button is-warning"><IoMdArrowBack /> Kembali</button>
                 </Link>
                 <h2 className="text-center">Form Edit Video</h2>
 

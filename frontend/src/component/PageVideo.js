@@ -2,6 +2,8 @@ import SidebarList from './SidebarList';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineDelete } from "react-icons/md";
 
 const PageVideo = () => {
   const [videos, setVideos] = useState([]);
@@ -63,7 +65,7 @@ const PageVideo = () => {
 
         <div style={{ marginBottom: '20px' }}>
           <Link to="/add-video">
-            <button className="button is-primary">Add Video</button>
+            <button className="button is-primary">+ Add Video</button>
           </Link>
         </div>
 
@@ -95,14 +97,14 @@ const PageVideo = () => {
                   </Link>
                 </td>
                 <td>{formatPrice(video.harga_video)}</td>
-                <td>
+                <td className="justify-content-center">
                   <Link to={`/edit-video/${video.id_video}`}>
-                    <button className="button is-small is-info">Edit</button>
+                    <button className="button is-small is-info mb-2"><FaRegEdit /> Edit</button>
                   </Link>
                   <button
                     onClick={() => handleDeleteClick(video.id_video)}
                     className="button is-small is-danger"
-                  >
+                  > <MdOutlineDelete />
                     Hapus
                   </button>
                 </td>

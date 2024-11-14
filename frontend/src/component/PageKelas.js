@@ -2,6 +2,8 @@ import SidebarList from './SidebarList';
 import { Link } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import { MdOutlineDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 
 const PageKelas = () => {
   const [kelas, setKelas] = useState([]);
@@ -45,6 +47,14 @@ const PageKelas = () => {
     }
   };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
   return (
     <div className="dashboard">
       {/* Sidebar */}
@@ -57,7 +67,7 @@ const PageKelas = () => {
         {/* Button Add Kelas */}
         <div style={{ marginBottom: '20px' }}>
           <Link to="/add-kelas">
-            <button className="button is-primary">Add Kelas</button>
+            <button className="button is-primary">+ Add Kelas</button>
           </Link>
         </div>
 
@@ -84,14 +94,14 @@ const PageKelas = () => {
                 <img src={kelas.sampul_kelas} alt="Sampul" width="100" />
               </td>
               <td>{kelas.jadwal}</td> 
-              <td>{`Rp ${kelas.harga_kelas}`}</td> 
+              <td>{formatPrice(kelas.harga_kelas)}</td> 
               <td>
               <Link to={`/edit-kelas/${kelas.id_kelas}`}>
-                  <button className="button is-small is-info">Edit</button>
+                  <button className="button is-small is-info mb-2"><FaRegEdit /> Edit</button>
               </Link>
                 <button 
                 onClick={() => handleDeleteClick(kelas.id_kelas)}
-                className="button is-small is-danger">Hapus</button>
+                className="button is-small is-danger"><MdOutlineDelete /> Hapus</button>
               </td>
             </tr>
           ))}
