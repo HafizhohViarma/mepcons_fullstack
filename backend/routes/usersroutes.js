@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controller/userscontroller.js'); // Pastikan path ini benar
 const authMiddleware = require('../midelwares/authMiddleware.js'); // Pastikan path ini benar
 const uploads = require('../midelwares/uploads.js'); // Pastikan path ini benar
+
 // Register user
 router.post('/register', userController.registerUser);
 

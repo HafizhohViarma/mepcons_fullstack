@@ -19,9 +19,8 @@ const PageUser = () => {
   const getUsers = async () => {
     try {
       const response = await axios.get('http://localhost:8082/api/users');
-      console.log('Data pengguna:', response.data);
+      
       setUsers(response.data);
-      console.log('Data pengguna:', response.data); // Debugging untuk memastikan data benar
     } catch (error) {
       setError(error.response ? error.response.data.message : error.message);
       console.error('Gagal mengambil data pengguna:', error);
@@ -48,7 +47,6 @@ const PageUser = () => {
       console.log(error);
     }
   };
-
 
   return (
     <div className="dashboard">
@@ -87,9 +85,9 @@ const PageUser = () => {
                   <td>{user.telp}</td>
                   <td>
                     {user.profil ? (
-                      <img src={`http://localhost:8082${user.profil}`} alt="Profil" width="50" height="50" />
+                      <img src={`http://localhost:8082/${user.profil}`} alt="Profil" width="50" height="50" />
                     ) : (
-                      'Tidak ada'
+                      <span>Tidak ada</span>
                     )}
                   </td>
                   <td>{user.level}</td>
@@ -98,11 +96,11 @@ const PageUser = () => {
                       <button className="button is-small is-info mr-2"><FaRegEdit /> Edit</button>
                     </Link>
                     <button
-                    onClick={() => handleDeleteClick(user.id_user)}
-                    className="button is-small is-danger"
-                  > <MdOutlineDelete />
-                    Hapus
-                  </button>
+                      onClick={() => handleDeleteClick(user.id_user)}
+                      className="button is-small is-danger"
+                    >
+                      <MdOutlineDelete /> Hapus
+                    </button>
                   </td>
                 </tr>
               ))
@@ -122,7 +120,7 @@ const PageUser = () => {
           <div className="modal-content">
             <div className="box">
               <p className="has-text-centered" style={{ fontSize: '1.2rem', marginBottom: '20px' }}>
-                <span style={{ fontSize: '2rem', color: 'red', marginRight: '10px' }}>✖️</span> Apakah Anda yakin ingin menghapus video ini?
+                <span style={{ fontSize: '2rem', color: 'red', marginRight: '55px' }}>✖️</span> Apakah Anda yakin ingin menghapus user ini?
               </p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
                 <button onClick={() => setShowConfirmModal(false)} className="button">Batal</button>
@@ -136,17 +134,18 @@ const PageUser = () => {
 
       {/* Modal Sukses Hapus */}
       {showSuccessModal && (
-        <div className="modal is-active">
-          <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
-          <div className="modal-content">
-            <div className="box has-text-centered">
-              <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
-              <p>Video berhasil dihapus!</p>
-            </div>
+      <div className="modal is-active">
+        <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
+        <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <div className="box has-text-centered">
+            <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
+            <p>User berhasil dihapus!</p>
           </div>
-          <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
         </div>
-      )}
+        <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
+      </div>
+    )
+    }
     </div>
   );
 };

@@ -121,7 +121,7 @@ const PageVideo = () => {
           <div className="modal-content">
             <div className="box">
               <p className="has-text-centered" style={{ fontSize: '1.2rem', marginBottom: '20px' }}>
-                <span style={{ fontSize: '2rem', color: 'red', marginRight: '10px' }}>✖️</span> Apakah Anda yakin ingin menghapus video ini?
+                <span style={{ fontSize: '2rem', color: 'red', marginRight: '55px' }}>✖️</span> Apakah Anda yakin ingin menghapus video ini?
               </p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
                 <button onClick={() => setShowConfirmModal(false)} className="button">Batal</button>
@@ -135,17 +135,18 @@ const PageVideo = () => {
 
       {/* Modal Sukses Hapus */}
       {showSuccessModal && (
-        <div className="modal is-active">
-          <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
-          <div className="modal-content">
-            <div className="box has-text-centered">
-              <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
-              <p>Video berhasil dihapus!</p>
-            </div>
+      <div className="modal is-active">
+        <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
+        <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <div className="box has-text-centered">
+            <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
+            <p>Video berhasil dihapus!</p>
           </div>
-          <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
         </div>
-      )}
+        <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
+      </div>
+    )
+    }
     </div>
   );
 };

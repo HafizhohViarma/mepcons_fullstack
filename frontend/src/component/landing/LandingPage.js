@@ -22,6 +22,7 @@ const LandingPage = () => {
   const [testimoni, setTestimoni] = useState([]);
   const [videoCount, setVideoCount] = useState(0);
   const [kelasCount, setKelasCount] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [selectedEbook, setSelectedEbook] = useState(null);
   const [selectedKelas, setSelectedKelas] = useState(null);
@@ -88,6 +89,17 @@ const LandingPage = () => {
     };
     
     fetchKelasCount();
+
+    const fetchUserCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:8082/api/users/count/users');  
+        setTotalUsers(response.data.totalUsers);
+      } catch (error) {
+        console.error('Gagal mengambil jumlah pengguna:', error);
+      }
+    };
+
+    fetchUserCount();
   }, []);
 
   const formatPrice = (price) => {
@@ -174,7 +186,7 @@ const LandingPage = () => {
                   <i className="fas fa-user"></i>
                 </div>
                 <div className="card-content">
-                  <h4>400.000</h4>
+                  <h4>{totalUsers !== null ? totalUsers : 'Memuat...'}</h4>
                   <p>Pengguna</p>
                 </div>
               </div>

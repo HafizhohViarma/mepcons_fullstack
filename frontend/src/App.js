@@ -31,6 +31,7 @@
   import Register from "./component/Register";
 import AddUser from "./component/AddUser";
 import EditUser from "./component/EditUser";
+import AuthSuccess from "./component/AuthSuccess";
 
   function App() {
     return (
@@ -76,6 +77,8 @@ import EditUser from "./component/EditUser";
           <Route path="/daftar-video" element={<DaftarVideo/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/auth-success" element={<AuthSuccess/>}/>
+
 
 
           {/* Halaman Sidebar User */}

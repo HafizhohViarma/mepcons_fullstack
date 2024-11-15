@@ -104,7 +104,7 @@ const PageTestimoni = () => {
           <div className="modal-content">
             <div className="box">
               <p className="has-text-centered" style={{ fontSize: '1.2rem', marginBottom: '20px' }}>
-                <span style={{ fontSize: '2rem', color: 'red', marginRight: '10px' }}>✖️</span> Apakah Anda yakin ingin menghapus Testimoni ini?
+                <span style={{ fontSize: '2rem', color: 'red', marginRight: '55px' }}>✖️</span> Apakah Anda yakin ingin menghapus Testimoni ini?
               </p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
                 <button onClick={() => setShowConfirmModal(false)} className="button">Batal</button>
@@ -120,7 +120,7 @@ const PageTestimoni = () => {
       {showSuccessModal && (
         <div className="modal is-active">
           <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
-          <div className="modal-content">
+          <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <div className="box has-text-centered">
               <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
               <p>Testimoni berhasil dihapus!</p>
