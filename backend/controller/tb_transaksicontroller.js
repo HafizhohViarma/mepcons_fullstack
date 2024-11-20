@@ -69,11 +69,27 @@ const createTransaction = async (req, res) => {
         email,
       },
       item_details: [
+<<<<<<< Updated upstream
         { id: productId, price: harga, quantity: 1, name: productName },
       ],
       ...paymentDetails,
+=======
+        {
+          id: id_video || id_ebook || id_kelas,
+          price: harga,
+          quantity: 1,
+          name: tipe_produk === 'video' ? 'Video' : tipe_produk === 'ebook' ? 'Ebook' : 'Kelas'
+        }
+      ],
+      // Menambahkan payment_type dan bank_transfer
+      payment_type: 'bank_transfer', // Untuk menggunakan bank transfer (virtual account)
+      bank_transfer: {
+        bank: 'bca' 
+      }
+>>>>>>> Stashed changes
     };
 
+  
     const response = await snap.createTransaction(parameter);
     await transaction.update({ payment_url: response.redirect_url });
 
@@ -151,6 +167,7 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
+<<<<<<< Updated upstream
 
 
 const getDetailTransaksi = async (req, res) => {
@@ -190,3 +207,6 @@ const getDetailTransaksi = async (req, res) => {
 };
 
 module.exports = { createTransaction, checkTransactionStatus, getAllTransactions,getDetailTransaksi };
+=======
+module.exports = { createTransaction, checkTransactionStatus, getAllTransactions };
+>>>>>>> Stashed changes
