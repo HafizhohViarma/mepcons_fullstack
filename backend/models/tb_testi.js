@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
       id_testi: {
         type: DataTypes.STRING,
         primaryKey: true,
-        autoIncrement: true,
         defaultValue: uuidv4 
       },
       nama_peserta: {

@@ -3,9 +3,8 @@ module.exports = (sequelize, DataTypes) => {
 
     const Kelas = sequelize.define('tb_Kelas', {
       id_kelas: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         primaryKey: true,
-        autoIncrement: true,
         defaultValue: () => uuidv4(),
       },
       sampul_kelas: {

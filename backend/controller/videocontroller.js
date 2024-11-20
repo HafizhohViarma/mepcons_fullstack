@@ -74,7 +74,7 @@ exports.getDetailVideo = async (req, res) => {
                 {
                     model: VideoFile,
                     as: 'file',
-                    attributes: ['id_file','sub_judul', 'video_file'],  
+                    attributes: ['id_file', 'sub_judul', 'video_file'],  
                 },
             ],
         });
@@ -84,13 +84,13 @@ exports.getDetailVideo = async (req, res) => {
             return res.status(404).json({ message: 'Video not found' });
         }
 
-    
+        // Membuat responseData dengan data yang benar
         const responseData = {
             id_video: video.id_video,
             files: video.file.map(f => ({
+                id_file: f.id_file,  // Menambahkan id_file
                 sub_judul: f.sub_judul,
                 video_file: f.video_file,
-                id_file: id_file
             })),
         };
 
@@ -100,6 +100,7 @@ exports.getDetailVideo = async (req, res) => {
         res.status(500).json({ message: 'Error retrieving video', error: error.message });
     }
 };
+
 
 exports.updateVideo = async (req, res) => {
     const videoId = req.params.id_video.trim();

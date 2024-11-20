@@ -1,12 +1,14 @@
+const { v4: uuidv4 } = require('uuid');
+
 module.exports = (sequelize, DataTypes) => {
   const tb_Transaksi = sequelize.define('tb_transaksi', {
     id_transaksi: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       primaryKey: true,
-      autoIncrement: true,
+      defaultValue: () => uuidv4(),
     },
     id_user: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     id_video: {
@@ -18,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     id_kelas: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     nama_user: {
@@ -32,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     tgl_transaksi: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
     harga: {
       type: DataTypes.DECIMAL(10, 2),
@@ -72,6 +75,11 @@ module.exports = (sequelize, DataTypes) => {
     tb_Transaksi.belongsTo(models.Kelas, {
       foreignKey: 'id_kelas',
       as: 'kelas',
+    });
+
+    tb_Transaksi.hasMany(DetailTransaksi, {
+      foreignKey: 'id_transaksi',  // Sesuaikan dengan nama kolom yang ada
+      as: 'detail_Transaksi',       // Sesuaikan alias di sini
     });
   };
 

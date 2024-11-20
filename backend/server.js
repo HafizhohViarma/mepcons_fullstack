@@ -5,11 +5,7 @@ const db = require('./models');
 const path = require('path'); 
 require('dotenv').config();
 
-
-
-
 const app = express();
-
 
 app.use(express.json({ limit: '500mb' })); 
 app.use(express.urlencoded({ limit: '500mb', extended: true }));
@@ -49,7 +45,7 @@ app.use('/api', transactionRoutes);
 
 
 // Port dimana server akan dijalankan
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8082;
 
 // Start server
 app.listen(PORT, () => {

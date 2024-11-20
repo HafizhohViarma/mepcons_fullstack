@@ -173,14 +173,14 @@ exports.deleteUser = async (req, res) => {
             return res.status(404).json({ message: 'User tidak ditemukan' });
         }
 
-        // Path untuk menyimpan file
+  
         const uploadPath = path.join('uploads', file.filename);
 
-        // Update record user dengan path foto profil baru
+        
         user.profil = uploadPath; 
         await user.save();
 
-        // URL foto yang bisa diakses
+      
         const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
 
         res.json({ message: 'Foto berhasil diupload', fileUrl: fileUrl });
@@ -193,9 +193,9 @@ exports.deleteUser = async (req, res) => {
 
 exports.countUsers = async (req, res) => {
     try {
-        // Menghitung jumlah id_user yang ada di tabel users
+        
         const totalUsers = await Users.count({
-            where: { id_user: { [Op.ne]: null } }  // Menghitung berdasarkan id_user
+            where: { id_user: { [Op.ne]: null } }  
         });
 
         res.json({ totalUsers });
