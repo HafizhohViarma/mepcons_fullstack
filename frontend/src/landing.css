@@ -67,6 +67,22 @@ body {
   margin-right: 1rem;
 }
 
+.navbar-nav .nav-item .nav-link .name {
+  background-color: #256BE4; /* Warna background */
+  color: #ffffff; /* Warna teks */
+  border: 2px solid #ffffff; /* Garis pinggir */
+  border-radius: 8px; /* Border radius */
+  padding: 0.5rem 1rem; /* Padding */
+  font-weight: bold; /* Teks tebal */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Animasi */
+}
+
+.navbar-nav .nav-item .nav-link .name :hover {
+  background-color: #ffffff; /* Warna background saat hover */
+  color: #256BE4; /* Warna teks saat hover */
+  border-color: #256BE4; /* Warna border saat hover */
+}
+
 /* Banner area */
 .home_banner_area {
   display: flex;

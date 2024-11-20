@@ -6,12 +6,13 @@ import ModalDetail from './ModalKelas';
 import logo from '../../img/mepcons_metro-logo.png';
 
 const DaftarKelas = () => {
-  const [kelas, setKelas] = useState([]);  // Data kelas yang diambil dari API
-  const [filteredKelas, setFilteredKelas] = useState([]);  // Data kelas yang sudah difilter
-  const [searchTerm, setSearchTerm] = useState("");  // Term pencarian
+  const [kelas, setKelas] = useState([]);  
+  const [filteredKelas, setFilteredKelas] = useState([]);  
+  const [searchTerm, setSearchTerm] = useState("");  
   const [selectedKelas, setSelectedKelas] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,17 +58,11 @@ const DaftarKelas = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // Set isLoggedIn ke true jika token ada
+    const storedUserId = localStorage.getItem('userId');
+    setIsLoggedIn(!!token);
+    setUserId(storedUserId);
+    getKelas();
   }, []);
-
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Apakah Anda yakin ingin logout dari laman ini?");
-    if (confirmLogout) {
-      localStorage.removeItem('token');
-      setIsLoggedIn(false);
-      window.location.href = '/login';
-    }
-  };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -101,17 +96,12 @@ const DaftarKelas = () => {
                 <li className="nav-item">
                   <a className="nav-link" href="/daftar-video">Daftar Video & E-Book</a>
                 </li>
-                {isLoggedIn && (
-                  <li className="nav-item">
-                    <a className="nav-link" href="/service-purchased">Saya</a>
-                  </li>
-                )}
-                {isLoggedIn ? (
-                  <li className="nav-item">
-                    <button className="nav-link" onClick={handleLogout}>
-                      Logout
-                    </button>
-                  </li>
+                {isLoggedIn && userId ? (
+                  <>
+                    <li className="nav-item">
+                      <a className="nav-link" href="/profile">Profile</a>
+                    </li>
+                  </>
                 ) : (
                   <li className="nav-item">
                     <a className="nav-link" href="/login">Masuk / Daftar</a>

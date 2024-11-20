@@ -1,14 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import '../../landing.css'; 
 import logo from '../../img/mepcons_metro-logo.png';
+import axios from 'axios';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Set initial state to an empty string
+  const [loading, setLoading] = useState(true); // For handling loading state
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+  
+  console.log('User ID:', userId); // Debug log to check userId
+  console.log('Token:', token); // Debug log to check token
 
   useEffect(() => {
     // Cek apakah token login ada di localStorage
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // Set isLoggedIn ke true jika token ada
+    setIsLoggedIn(!!token); // Set isLoggedIn to true if token exists
+
+    if (token && userId) {
+      // Fetch user details from API based on userId
+      axios.get(`http://localhost:8082/api/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass the token for authentication
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      })
+      .finally(() => setLoading(false)); // Stop loading after API request completes
+    } else {
+      setLoading(false); // Stop loading if no token or userId
+    }
 
     const handleScroll = () => {
       const header = document.querySelector('.header_area');
@@ -18,20 +40,10 @@ const Navbar = () => {
         header.classList.remove('scrolled');
       }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleLogout = () => {
-    // Menampilkan alert konfirmasi sebelum logout
-    const confirmLogout = window.confirm("Apakah Anda yakin ingin logout dari laman ini?");
-    if (confirmLogout) {
-      // Hapus token dari localStorage saat logout
-      localStorage.removeItem('token');
-      setIsLoggedIn(false); // Perbarui status login
-      window.location.href = '/login'; // Alihkan ke halaman login
-    }
-  };
+  }, [userId]);
 
   return (
     <div>
@@ -52,17 +64,12 @@ const Navbar = () => {
                 <li className="nav-item">
                   <a className="nav-link" href="#testimoni">Ulasan</a>
                 </li>
-                {isLoggedIn && (
-                  <li className="nav-item">
-                    <a className="nav-link" href="/service-purchased">Saya</a>
-                  </li>
-                )}
-                {isLoggedIn ? (
-                  <li className="nav-item">
-                    <button className="nav-link" onClick={handleLogout}>
-                      Logout
-                    </button>
-                  </li>
+                {isLoggedIn && !loading ? (
+                  <>
+                    <li className="nav-item">
+                      <a className="nav-link" href="/profile/">Profile</a>
+                    </li>
+                  </>
                 ) : (
                   <li className="nav-item">
                     <a className="nav-link" href="/login">Masuk / Daftar</a>

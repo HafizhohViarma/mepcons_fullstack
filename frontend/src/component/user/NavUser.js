@@ -1,49 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react';
-import '../../style.css';
+import React from 'react';
+import '../../landing.css'; 
 
 const NavUser = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(prevState => !prevState);
-  };
-
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className="navbar-user">
-      <nav className="navbar-user-container">
-        <div className="navbar-user-logo">
-          <h2>Dashboard</h2>
-        </div>
-        
-        <div className="navbar-right" ref={dropdownRef}>
-          <button onClick={toggleDropdown} className="user-button">
-            User
-          </button>
-          {dropdownOpen && (
-            <div className="dropdown-menu">
-              <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/logout">Logout</a></li>
+    <div>
+      <header className="header_area">
+        <nav className="navbar navbar-expand-lg navbar-light">
+          <div className="container">
+            <div className="collapse navbar-collapse offset" id="navbarSupportedContent">
+              <ul className="nav navbar-nav menu_nav ml-auto">
+                <li className="nav-item active">
+                  <a className="nav-link" href="/">Beranda</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#about-us">Tentang Kami</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#testimoni">Ulasan</a>
+                </li>
               </ul>
             </div>
-          )}
-        </div>
-      </nav>
+          </div>
+        </nav>
+      </header>
     </div>
   );
 };

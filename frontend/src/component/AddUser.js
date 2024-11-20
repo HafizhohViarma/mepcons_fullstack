@@ -71,7 +71,7 @@ const AddUser = () => {
         </Link>
         <h2 className="text-center">Add User</h2>
         {error && <div className="alert alert-danger">{error}</div>}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: '600px', margin: '0 auto' }}>
           <div className="form-group">
             <label htmlFor="nama">Nama</label>
             <input
@@ -134,11 +134,11 @@ const AddUser = () => {
               <option value="admin">Admin</option>
             </select>
           </div>
-          <div className="form-group">
+          <div className="form-group mt-4 mb-4">
             <label htmlFor="profil">Foto Profil</label>
             <input
               type="file"
-              className="form-control-file"
+              className="form-control-file ml-3"
               id="profil"
               name="profil"
               onChange={handleFileChange}

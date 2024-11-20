@@ -24,6 +24,9 @@ const Login = () => {
 
         const decodedToken = JSON.parse(atob(response.data.token.split('.')[1]));
         const userLevel = decodedToken.level;
+        const userId = decodedToken.id; 
+
+        localStorage.setItem('userId', userId);
 
         if (userLevel === 'admin') {
           window.location.href = '/admin';
@@ -39,6 +42,8 @@ const Login = () => {
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:8082/auth/google'; // Direct to backend OAuth2 login
   };
+
+  
 
   return (
     <div className="login-body">

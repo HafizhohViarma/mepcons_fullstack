@@ -13,6 +13,42 @@ const ModalEbook = ({ isOpen, onClose, ebook }) => {
     }).format(price);
   };
 
+  const handlePurchase = async () => {
+    const idUser = localStorage.getItem('userId'); // Ambil ID user dari localStorage
+    if (!idUser) {
+      // Arahkan ke halaman login jika userId tidak ditemukan
+      alert('Anda perlu login untuk melanjutkan pembelian.');
+      window.location.href = '/login'; // Ganti '/login' dengan URL halaman login Anda
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8082/api/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id_user: idUser, // Gunakan ID user yang valid
+          id_ebook: ebook.id_ebook,
+          tipe_produk: 'ebook',
+          harga: ebook.harga_ebook,
+          payment: 'midtrans',
+        }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        // Redirect ke URL Midtrans
+        window.location.href = result.payment_url;
+      } else {
+        console.error('Gagal membuat transaksi:', result.message);
+        alert('Transaksi gagal. Silakan coba lagi.');
+      }
+    } catch (error) {
+      console.error('Error saat membuat transaksi:', error);
+      alert('Terjadi kesalahan. Silakan coba lagi.');
+    }
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -25,8 +61,7 @@ const ModalEbook = ({ isOpen, onClose, ebook }) => {
         <p><FaSquareCheck /> E-Certificate</p>
         <p><FaSquareCheck /> Free Konsultasi Pasca Training</p>
 
-        <br>
-        </br>
+        <br></br>
 
         {/* Harga yang berada di kiri */}
         <p className="text-danger">{formatPrice(ebook.harga_ebook)}</p>
@@ -34,7 +69,9 @@ const ModalEbook = ({ isOpen, onClose, ebook }) => {
         {/* Tombol Batal dan Beli sejajar */}
         <div className="modal-buttons">
           <button onClick={onClose} className="btn btn-secondary">Batal</button>
-          <button className="btn btn-primary"><FaShopify /> Beli</button>
+          <button className="btn btn-primary" onClick={handlePurchase}>
+            <FaShopify /> Beli
+          </button>
         </div>
       </div>
     </div>

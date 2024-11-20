@@ -32,6 +32,10 @@
 import AddUser from "./component/AddUser";
 import EditUser from "./component/EditUser";
 import AuthSuccess from "./component/AuthSuccess";
+import UbahProfile from "./component/user/UbahProfile";
+import Security from "./component/user/Security";
+import PageDetailTransaksi from "./component/PageDetailTransaksi";
+import Payment from "./component/user/Payment";
 
   function App() {
     return (
@@ -45,6 +49,7 @@ import AuthSuccess from "./component/AuthSuccess";
           <Route path="/user" element={<PageUser/>}/>
           <Route path="/testimoni" element={<PageTestimoni/>}/>
           <Route path="/transaksi" element={<PageTransaksi/>}/>
+          <Route path="/transaction/:id" element={<PageDetailTransaksi/>}/>
           <Route path="/videos/:id" element={<PageDetailVideo/>}/>
 
           {/* add */}
@@ -79,13 +84,14 @@ import AuthSuccess from "./component/AuthSuccess";
           <Route path="/register" element={<Register/>}/>
           <Route path="/auth-success" element={<AuthSuccess/>}/>
 
-
-
           {/* Halaman Sidebar User */}
-          <Route path="/service-purchased" element={<Dashboard/>}/>
+          <Route path="/profile" element={<Dashboard/>}/>
+          <Route path="/security" element={<Security/>}/>
+          <Route path="/ubah-profile" element={<UbahProfile />} />
           <Route path="/video-paid" element={<VideoPaid/>}/>
           <Route path="/kelas-paid" element={<KelasPaid/>}/>
           <Route path="/ebook-paid" element={<EbookPaid/>}/>
+          <Route path="/payment" element={<Payment/>}/>
         </Routes>
       </BrowserRouter>
     );

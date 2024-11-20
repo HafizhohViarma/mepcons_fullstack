@@ -17,6 +17,7 @@ const DaftarVideo = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredVideos, setFilteredVideos] = useState([]);
   const [filteredEbooks, setFilteredEbooks] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,21 +106,13 @@ const DaftarVideo = () => {
   };
 
   useEffect(() => {
-    // Cek apakah token login ada di localStorage
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // Set isLoggedIn ke true jika token ada
+    const storedUserId = localStorage.getItem('userId');
+    setIsLoggedIn(!!token);
+    setUserId(storedUserId);
+    getVideo();
+    getEbook();
   }, []);
-
-  const handleLogout = () => {
-    // Menampilkan alert konfirmasi sebelum logout
-    const confirmLogout = window.confirm("Apakah Anda yakin ingin logout dari laman ini?");
-    if (confirmLogout) {
-      // Hapus token dari localStorage saat logout
-      localStorage.removeItem('token');
-      setIsLoggedIn(false); // Perbarui status login
-      window.location.href = '/login'; // Alihkan ke halaman login
-    }
-  };
 
   return (
     <div>
@@ -137,17 +130,12 @@ const DaftarVideo = () => {
                 <li className="nav-item">
                   <a className="nav-link" href="/daftar-kelas">Daftar Kelas</a>
                 </li>
-                {isLoggedIn && (
-                  <li className="nav-item">
-                    <a className="nav-link" href="/service-purchased">Saya</a>
-                  </li>
-                )}
-                {isLoggedIn ? (
-                  <li className="nav-item">
-                    <button className="nav-link" onClick={handleLogout}>
-                      Logout
-                    </button>
-                  </li>
+                {isLoggedIn && userId ? (
+                  <>
+                    <li className="nav-item">
+                      <a className="nav-link" href="/profile">Profile</a>
+                    </li>
+                  </>
                 ) : (
                   <li className="nav-item">
                     <a className="nav-link" href="/login">Masuk / Daftar</a>
