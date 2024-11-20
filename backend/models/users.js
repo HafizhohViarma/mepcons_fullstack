@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     Users.associate = (models) => {
         Users.hasMany(models.DetailTransaksi, {
             foreignKey: 'id_user',
-            as: 'detailTransaksi', // Alias untuk relasi
+            as: 'detail_Transaksi',
         });
     };
 
