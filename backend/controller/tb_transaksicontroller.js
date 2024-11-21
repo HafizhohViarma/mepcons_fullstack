@@ -1,6 +1,5 @@
 const midtransClient = require('midtrans-client');
-const { tb_Transaksi, Users, detail_Transaksi } = require('../models');
-const { Sequelize } = require('sequelize');
+const { tb_Transaksi, Users, detail_Transaksi, sequelize } = require('../models');
 
 // Konfigurasi Midtrans Client
 let snap = new midtransClient.Snap({
@@ -10,22 +9,13 @@ let snap = new midtransClient.Snap({
 });
 
 // Fungsi untuk membuat transaksi
+// Fungsi untuk membuat transaksi
 const createTransaction = async (req, res) => {
-  const {
-    id_user,
-    id_video,
-    id_ebook,
-    id_kelas,
-    tipe_produk,
-    harga,
-    payment,
-    bukti_bayar,
-    status,
-  } = req.body;
+  const { id_user, id_video, id_ebook, id_kelas, tipe_produk, harga, payment, status, nama } = req.body;
 
   try {
     // Validasi input
-    if (!id_user || !tipe_produk || !harga || !payment) {
+    if (!id_user || !tipe_produk || !harga || !payment || !nama) {
       return res.status(400).json({ message: 'Data tidak lengkap!' });
     }
 
@@ -48,9 +38,9 @@ const createTransaction = async (req, res) => {
       tipe_produk,
       harga,
       payment,
-      bukti_bayar,
       status: status || 'pending', // Set default status sebagai 'pending'
       tgl_transaksi: new Date(),
+      nama, // Tambahkan field nama ke transaksi utama
     });
 
     // Parameter transaksi Midtrans
@@ -63,7 +53,7 @@ const createTransaction = async (req, res) => {
         first_name: user.nama_user, // Nama pengguna
         email: user.email, // Email pengguna
         phone: user.telp || '-', // Tambahkan telepon (default jika kosong)
-        full_name: user.nama, // Nama lengkap pengguna
+        full_name: nama, // Gunakan field nama untuk nama lengkap
       },
       item_details: [
         {
@@ -94,8 +84,8 @@ const createTransaction = async (req, res) => {
       tipe_produk,
       harga,
       payment,
-      bukti_bayar,
       status: status || 'pending',
+      nama, // Tambahkan nama ke detail transaksi
     });
 
     // Kembalikan respons sukses
@@ -128,6 +118,14 @@ const checkTransactionStatus = async (req, res) => {
       await transaction.update({ status: statusResponse.transaction_status });
     }
 
+    // Perbarui status di detail transaksi terkait
+    const detailTransaksis = await detail_Transaksi.findAll({ where: { id_transaksi: transactionId } });
+    for (const detail of detailTransaksis) {
+      if (detail.status !== statusResponse.transaction_status) {
+        await detail.update({ status: statusResponse.transaction_status });
+      }
+    }
+
     res.status(200).json({
       message: 'Status transaksi berhasil diperoleh',
       status: statusResponse.transaction_status,
@@ -139,59 +137,26 @@ const checkTransactionStatus = async (req, res) => {
   }
 };
 
-//  mendapatkan semua transaksi
+// Mendapatkan semua transaksi
 const getAllTransactions = async (req, res) => {
   try {
-    // Ambil semua transaksi
     const transactions = await tb_Transaksi.findAll({
-      where: { status: { [Sequelize.Op.ne]: 'pending' } },
       include: [
         {
           model: detail_Transaksi,
           as: 'detail_Transaksi',
         },
+        {
+          model: Users,
+          as: 'Users',
+          attributes: ['nama'],
+        },
       ],
     });
 
-    // Sinkronisasi status transaksi dan detail transaksi
-    const updatedTransactions = await Promise.all(
-      transactions.map(async (transaction) => {
-        try {
-          // Ambil status dari Midtrans
-          const midtransStatus = await snap.transaction.status(`ORDER-${transaction.id_transaksi}`);
-
-          // Update status transaksi jika berbeda
-          if (transaction.status !== midtransStatus.transaction_status) {
-            await transaction.update({ status: midtransStatus.transaction_status });
-          }
-
-          // Perbarui status di detail transaksi terkait
-          const detailTransaksis = transaction.detail_Transaksi;
-          for (const detail of detailTransaksis) {
-            if (detail.status !== midtransStatus.transaction_status) {
-              await detail.update({ status: midtransStatus.transaction_status });
-            }
-          }
-
-          return {
-            ...transaction.toJSON(),
-            status: midtransStatus.transaction_status,
-            detail_Transaksi: detailTransaksis.map((detail) => ({
-              ...detail.toJSON(),
-              status: midtransStatus.transaction_status, // Pastikan data yang dikembalikan sinkron
-            })),
-          };
-        } catch (error) {
-          console.error(`Error sinkronisasi transaksi ID ${transaction.id_transaksi}:`, error);
-          return transaction; // Jika gagal sinkron, kembalikan data lama
-        }
-      })
-    );
-
-    // Kembalikan hasil transaksi yang sudah disinkronkan
     res.status(200).json({
-      message: 'Data transaksi berhasil diambil dan disinkronisasi',
-      transactions: updatedTransactions,
+      message: 'Data transaksi berhasil diambil',
+      transactions,
     });
   } catch (error) {
     console.error('Error mengambil transaksi:', error);
@@ -208,19 +173,18 @@ const getDetailTransaksi = async (req, res) => {
   }
 
   try {
-    // Cari detail transaksi berdasarkan `order_id`
     const detailTransaksi = await detail_Transaksi.findOne({
       where: { order_id },
       include: [
         {
           model: tb_Transaksi,
           as: 'tb_transaksi',
-          attributes: ['id_transaksi', 'payment', 'status'],
+          attributes: ['status'],
         },
         {
           model: Users,
           as: 'users',
-          attributes: ['nama'],
+          attributes: ['nama', 'email'],
         },
       ],
     });
@@ -229,59 +193,19 @@ const getDetailTransaksi = async (req, res) => {
       return res.status(404).json({ message: 'Detail transaksi tidak ditemukan!' });
     }
 
-    // Ambil transaksi terkait untuk sinkronisasi
-    const transaksi = await tb_Transaksi.findOne({
-      where: { id_transaksi: detailTransaksi.id_transaksi },
-    });
-
-    if (!transaksi) {
-      return res.status(404).json({ message: 'Transaksi terkait tidak ditemukan!' });
-    }
-
-    // Sinkronisasi status transaksi dengan Midtrans
-    const midtransStatus = await snap.transaction.status(order_id);
-    if (transaksi.status !== midtransStatus.transaction_status) {
-      await transaksi.update({ status: midtransStatus.transaction_status });
-    }
-
-    // Perbarui detail transaksi jika diperlukan
-    detailTransaksi.status = midtransStatus.transaction_status;
-
-    // Kembalikan detail transaksi yang sudah disinkronkan
     res.status(200).json({
-      message: 'Detail transaksi ditemukan dan disinkronkan',
+      message: 'Detail transaksi berhasil ditemukan',
       detailTransaksi,
     });
   } catch (error) {
-    console.error('Error saat mendapatkan detail transaksi:', error);
+    console.error('Error mengambil detail transaksi:', error);
     res.status(500).json({ message: 'Terjadi kesalahan pada server', error: error.message });
   }
 };
 
-// sinkron status transaksi 
-const syncTransactionStatus = async (transactions) => {
-  const updatedTransactions = [];
-  for (const transaction of transactions) {
-    try {
-    
-      const midtransStatus = await snap.transaction.status(`ORDER-${transaction.id_transaksi}`);
-      
-      
-      if (transaction.status !== midtransStatus.transaction_status) {
-        await transaction.update({ status: midtransStatus.transaction_status });
-      }
-
-      updatedTransactions.push({ 
-        ...transaction.toJSON(), 
-        status: midtransStatus.transaction_status 
-      });
-    } catch (error) {
-      console.error(`Error sinkronisasi transaksi ID ${transaction.id_transaksi}:`, error);
-      updatedTransactions.push(transaction); 
-    }
-  }
-  return updatedTransactions;
+module.exports = {
+  createTransaction,
+  checkTransactionStatus,
+  getAllTransactions,
+  getDetailTransaksi,
 };
-
-
-module.exports = { createTransaction, checkTransactionStatus, getAllTransactions, getDetailTransaksi };

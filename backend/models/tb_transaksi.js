@@ -23,9 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    nama_user: {
+    nama: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     tipe_produk: {
       type: DataTypes.ENUM('video', 'kelas', 'ebook'),
@@ -44,12 +44,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    bukti_bayar: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     status: {
-      type: DataTypes.ENUM('pending', 'konfirmasi', 'tolak'),
+      type: DataTypes.ENUM('pending', 'settlement', 'cancel'),
       allowNull: false,
       defaultValue: 'pending',
     },
@@ -60,26 +56,34 @@ module.exports = (sequelize, DataTypes) => {
 
   // Asosiasi dengan model lain
   tb_Transaksi.associate = (models) => {
+    // Asosiasi dengan Users
     tb_Transaksi.belongsTo(models.Users, {
       foreignKey: 'id_user',
-      as: 'user',
+      as: 'Users',  // Pastikan alias konsisten (huruf besar)
     });
+    
+    // Asosiasi dengan Video
     tb_Transaksi.belongsTo(models.Video, {
       foreignKey: 'id_video',
-      as: 'video',
-    });
-    tb_Transaksi.belongsTo(models.Ebook, {
-      foreignKey: 'id_ebook',
-      as: 'ebook',
-    });
-    tb_Transaksi.belongsTo(models.Kelas, {
-      foreignKey: 'id_kelas',
-      as: 'kelas',
+      as: 'Video',  // Pastikan alias konsisten
     });
 
-    tb_Transaksi.hasMany(DetailTransaksi, {
-      foreignKey: 'id_transaksi',  // Sesuaikan dengan nama kolom yang ada
-      as: 'detail_Transaksi',       // Sesuaikan alias di sini
+    // Asosiasi dengan Ebook
+    tb_Transaksi.belongsTo(models.Ebook, {
+      foreignKey: 'id_ebook',
+      as: 'Ebook',  // Pastikan alias konsisten
+    });
+
+    // Asosiasi dengan Kelas
+    tb_Transaksi.belongsTo(models.Kelas, {
+      foreignKey: 'id_kelas',
+      as: 'Kelas',  // Pastikan alias konsisten
+    });
+
+    // Asosiasi dengan DetailTransaksi
+    tb_Transaksi.hasMany(models.DetailTransaksi, {
+      foreignKey: 'id_transaksi',
+      as: 'DetailTransaksi',  // Pastikan alias konsisten
     });
   };
 

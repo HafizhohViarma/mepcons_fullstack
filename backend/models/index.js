@@ -32,7 +32,7 @@ db.detail_Transaksi = require('./detail_transaksi.js')(sequelize, Sequelize.Data
 
 // Relasi antara Users dan Transaksi
 db.Users.hasMany(db.tb_Transaksi, { foreignKey: 'id_user', as: 'tb_transaksi' });
-db.tb_Transaksi.belongsTo(db.Users, { foreignKey: 'id_user', as: 'user' });
+db.tb_Transaksi.belongsTo(db.Users, { foreignKey: 'id_user', as: 'Users' });
 
 // Relasi antara Video dan Transaksi
 db.Video.hasMany(db.tb_Transaksi, { foreignKey: 'id_video', as: 'tb_transaksi' });

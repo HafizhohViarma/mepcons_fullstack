@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true,
         },
         telp: {
             type: DataTypes.STRING,
@@ -39,9 +38,16 @@ module.exports = (sequelize, DataTypes) => {
 
     // Defining the relationships
     Users.associate = (models) => {
-        Users.hasMany(models.DetailTransaksi, {
+        // Relasi antara Users dan Detail_Transaksi
+        Users.hasMany(models.Detail_Transaksi, {
             foreignKey: 'id_user',
             as: 'detail_Transaksi',
+        });
+
+        // Relasi antara Users dan Transaksi
+        Users.hasMany(models.tb_Transaksi, {
+            foreignKey: 'id_user',
+            as: 'tb_transaksi',
         });
     };
 

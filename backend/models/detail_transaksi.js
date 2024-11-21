@@ -31,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        nama: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
         tipe_produk: {
             type: DataTypes.ENUM('video', 'kelas', 'ebook'),
             allowNull: false,
@@ -46,10 +42,6 @@ module.exports = (sequelize, DataTypes) => {
         payment: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        bukti_bayar: {
-            type: DataTypes.STRING,
-            allowNull: true,
         },
         status: {
             type: DataTypes.ENUM('pending', 'konfirmasi', 'tolak'),
@@ -65,13 +57,13 @@ module.exports = (sequelize, DataTypes) => {
     detail_Transaksi.associate = (models) => {
         detail_Transaksi.belongsTo(models.Users, {
             foreignKey: 'id_user',
-            as: 'users', // Alias untuk relasi
+            as: 'users', 
         });
 
         // Relasi lainnya (opsional)
         detail_Transaksi.belongsTo(models.tb_ebook, {
             foreignKey: 'id_ebook',
-            as: 'ebook',
+            as: 'Ebook',
         });
         detail_Transaksi.belongsTo(models.tb_Kelas, {
             foreignKey: 'id_kelas',
