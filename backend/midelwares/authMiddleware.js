@@ -11,8 +11,8 @@ exports.authenticate = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_secret_key');
-    req.userId = decoded.id; // Simpan ID user di request untuk digunakan di route selanjutnya
-    req.userLevel = decoded.level; // Simpan level user di request
+    req.userId = decoded.id; // Simpan ID user 
+    req.userLevel = decoded.level; 
     next();
   } catch (error) {
     console.error(error);

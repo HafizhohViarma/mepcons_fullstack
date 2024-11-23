@@ -36,19 +36,19 @@ db.tb_Transaksi.belongsTo(db.Users, { foreignKey: 'id_user', as: 'Users' });
 
 // Relasi antara Video dan Transaksi
 db.Video.hasMany(db.tb_Transaksi, { foreignKey: 'id_video', as: 'tb_transaksi' });
-db.tb_Transaksi.belongsTo(db.Video, { foreignKey: 'id_video', as: 'video' });
+db.tb_Transaksi.belongsTo(db.Video, { foreignKey: 'id_video', as: 'Video' });
 
 // Relasi antara Ebook dan Transaksi
 db.Ebook.hasMany(db.tb_Transaksi, { foreignKey: 'id_ebook', as: 'tb_transaksi' });
-db.tb_Transaksi.belongsTo(db.Ebook, { foreignKey: 'id_ebook', as: 'ebook' });
+db.tb_Transaksi.belongsTo(db.Ebook, { foreignKey: 'id_ebook', as: 'Ebook' });
 
 // Relasi antara Kelas dan Transaksi
 db.Kelas.hasMany(db.tb_Transaksi, { foreignKey: 'id_kelas', as: 'tb_transaksi' });
-db.tb_Transaksi.belongsTo(db.Kelas, { foreignKey: 'id_kelas', as: 'kelas' });
+db.tb_Transaksi.belongsTo(db.Kelas, { foreignKey: 'id_kelas', as: 'Kelas' });
 
 // Relasi antara Video dan VideoFile (sub judul)
 db.Video.hasMany(db.VideoFile, { foreignKey: 'id_video', as: 'file' });
-db.VideoFile.belongsTo(db.Video, { foreignKey: 'id_video', as: 'video' });
+db.VideoFile.belongsTo(db.Video, { foreignKey: 'id_video', as: 'Video' });
 
 // Relasi antara Transaksi dan DetailTransaksi
 db.tb_Transaksi.hasMany(db.detail_Transaksi, { foreignKey: 'id_transaksi', as: 'detail_Transaksi' });
@@ -61,15 +61,15 @@ db.detail_Transaksi.belongsTo(db.Users, { foreignKey: 'id_user', as: 'users' });
 
 // Relasi antara Video dan DetailTransaksi
 db.Video.hasMany(db.detail_Transaksi, { foreignKey: 'id_video', as: 'detail_Transaksi' });
-db.detail_Transaksi.belongsTo(db.Video, { foreignKey: 'id_video', as: 'video' });
+db.detail_Transaksi.belongsTo(db.Video, { foreignKey: 'id_video', as: 'Video' });
 
 // Relasi antara Ebook dan DetailTransaksi
 db.Ebook.hasMany(db.detail_Transaksi, { foreignKey: 'id_ebook', as: 'detail_Transaksi' });
-db.detail_Transaksi.belongsTo(db.Ebook, { foreignKey: 'id_ebook', as: 'ebook' });
+db.detail_Transaksi.belongsTo(db.Ebook, { foreignKey: 'id_ebook', as: 'Ebook' });
 
 // Relasi antara Kelas dan DetailTransaksi
 db.Kelas.hasMany(db.detail_Transaksi, { foreignKey: 'id_kelas', as: 'detail_Transaksi' });
-db.detail_Transaksi.belongsTo(db.Kelas, { foreignKey: 'id_kelas', as: 'kelas' });
+db.detail_Transaksi.belongsTo(db.Kelas, { foreignKey: 'id_kelas', as: 'Kelas' });
 
 // Sinkronisasi database
 db.sequelize

@@ -7,4 +7,5 @@ router.post('/transactions', transactionController.createTransaction);
 router.get('/status/:order_id', transactionController.checkTransactionStatus);
 router.get('/all',transactionController. getAllTransactions);
 router.get('/detail/:order_id',transactionController. getDetailTransaksi);
+router.get('/transaksi/users/:id_user',transactionController. getTransaksiByIdUser);
 module.exports = router;
