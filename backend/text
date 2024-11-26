@@ -1,0 +1,78 @@
+const oauth2Client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, 'http://localhost:8082/auth/google/callback');
+
+const scopes = [
+  'http://www.googleapis.com/auth/userinfo.email',
+  'http://www.googleapis.com/auth/userinfo.profile',
+]
+
+const authorizationUrl = oauth2Client.generateAuthUrl({
+  access_type: 'offline',
+  scope: scopes,
+  include_granted_scopes: true,
+})
+
+//login with google
+app.get('/auth/google', (req, res) => {
+  res.redirect(authorizationUrl);
+})
+
+//callback login
+app.get('/auth/google/callback', async (req, res) => {
+  const {code} = req.query
+
+  const {tokens} = await oauth2Client.getToken(code);
+
+  oauth2Client.setCredentials(tokens);
+
+  const OAuth2 = google.oauth2({
+    auth: oauth2Client,
+    version: 'v2'
+  })
+
+  const {data} = await oauth2.userinfo.get();
+
+  if(!data.email || !data.name){
+    return res.json({
+      data: data,
+    })
+  }
+
+  let user = await mepcons_db.users.findUnique({
+    where: {
+      email: data.email
+    }
+  })
+
+  if(!user){
+    user = await mepcons_db.users.findUnique({
+      data: {
+        name: data.name,
+        email: data.email,
+        address: "-"
+      }
+    })
+  }
+  const payload = {
+    id_user: user?.id_user,
+    name: user?.name,
+    address: user?.address,
+  }
+
+  const secret = process.env.JWT_SECRET!;
+
+  const expressIn = 60 * 60 * 1;
+
+  const token = jwt.sign(payload, secret, {expressIn: expressIn})
+
+  //url untuk frontend
+  return res.redirect(`http://localhost:3000/auth-succes?token${token}`)
+
+  return res.json({
+    data: {
+      id_user: user?.id_user,
+      name: user?.name,
+      address: user?.address
+    },
+    token: token
+  })
+})

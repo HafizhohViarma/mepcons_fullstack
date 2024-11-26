@@ -69,12 +69,17 @@ exports.getDetailVideo = async (req, res) => {
     try {
         const video = await Video.findOne({
             where: { id_video: videoId },
-            attributes: ['id_video'],  
+            attributes: ['id_video',
+                'judul_video',
+                'keterangan_video',
+                'sampul_video',
+                'harga_video'
+            ],  
             include: [
                 {
                     model: VideoFile,
                     as: 'file',
-                    attributes: ['id_file', 'sub_judul', 'video_file'],  
+                    attributes: ['id_file','sub_judul', 'video_file'],  
                 },
             ],
         });
@@ -84,11 +89,15 @@ exports.getDetailVideo = async (req, res) => {
             return res.status(404).json({ message: 'Video not found' });
         }
 
-        // Membuat responseData dengan data yang benar
+    
         const responseData = {
             id_video: video.id_video,
+            judul_video: video.judul_video,
+            keterangan_video: video.keterangan_video,
+            sampul_video: video.sampul_video,
+            harga_video: video.harga_video,
             files: video.file.map(f => ({
-                id_file: f.id_file,  // Menambahkan id_file
+                id_file: f.id_file,
                 sub_judul: f.sub_judul,
                 video_file: f.video_file,
             })),
@@ -100,7 +109,6 @@ exports.getDetailVideo = async (req, res) => {
         res.status(500).json({ message: 'Error retrieving video', error: error.message });
     }
 };
-
 
 exports.updateVideo = async (req, res) => {
     const videoId = req.params.id_video.trim();
@@ -272,11 +280,11 @@ exports.countVideos = async (req, res) => {
     try {
         // Menghitung jumlah video berdasarkan id_video
         const count = await Video.count({
-            distinct: true,  
-            col: 'id_video'  
+            distinct: true,  // Hanya menghitung id_video yang unik
+            col: 'id_video'  // Menghitung berdasarkan kolom id_video
         });
 
-        
+        // Mengirimkan response dengan jumlah video
         res.status(200).json({
             message: 'Total videos',
             count: count

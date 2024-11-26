@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     nama: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING, 
       allowNull: false,
     },
     tipe_produk: {
@@ -56,34 +56,26 @@ module.exports = (sequelize, DataTypes) => {
 
   // Asosiasi dengan model lain
   tb_Transaksi.associate = (models) => {
-    // Asosiasi dengan Users
     tb_Transaksi.belongsTo(models.Users, {
       foreignKey: 'id_user',
-      as: 'Users',  // Pastikan alias konsisten (huruf besar)
+      as: 'Users', 
     });
-    
-    // Asosiasi dengan Video
     tb_Transaksi.belongsTo(models.Video, {
       foreignKey: 'id_video',
-      as: 'Video',  // Pastikan alias konsisten
+      as: 'Video',
     });
-
-    // Asosiasi dengan Ebook
     tb_Transaksi.belongsTo(models.Ebook, {
       foreignKey: 'id_ebook',
-      as: 'Ebook',  // Pastikan alias konsisten
+      as: 'Ebook',
     });
-
-    // Asosiasi dengan Kelas
     tb_Transaksi.belongsTo(models.Kelas, {
       foreignKey: 'id_kelas',
-      as: 'Kelas',  // Pastikan alias konsisten
+      as: 'Kelas',
     });
 
-    // Asosiasi dengan DetailTransaksi
     tb_Transaksi.hasMany(models.DetailTransaksi, {
       foreignKey: 'id_transaksi',
-      as: 'DetailTransaksi',  // Pastikan alias konsisten
+      as: 'DetailTransaksi',  
     });
   };
 

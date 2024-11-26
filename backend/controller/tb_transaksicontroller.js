@@ -274,6 +274,7 @@ const getDetailTransaksi = async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan pada server', error: error.message });
   }
 };
+
 const getTransaksiByIdUser = async (req, res) => {
   const { id_user } = req.params;
 
@@ -286,19 +287,19 @@ const getTransaksiByIdUser = async (req, res) => {
         {
           model: Ebook,
           as: 'Ebook',  
-          attributes: ['judul_ebook'],
+          attributes: ['judul_ebook', 'sampul_ebook', 'ebook_file'],
           required: false, 
         },
         {
           model: Kelas,
           as: 'Kelas',  
-          attributes: ['judul_kelas'],
+          attributes: ['judul_kelas', 'sampul_kelas'],
           required: false, 
         },
         {
           model: Video,
           as: 'Video',  
-          attributes: ['judul_video'],
+          attributes: ['judul_video', 'sampul_video', 'id_video'],
           required: false, 
         },
       ],
@@ -313,17 +314,25 @@ const getTransaksiByIdUser = async (req, res) => {
     const formattedData = userTransaksi.map((transaksi) => {
       let tipe_produk = 'Tidak Ditemukan';
       let judul_produk = 'Tidak ada judul';
+      let sampul_produk = null;
+      let ebook_file = null;
+      let id_video = 'Id Video tidak ditemukan';
 
-      // Tentukan tipe_produk dan judul berdasarkan produk yang terkait
+      // Tentukan tipe_produk, judul, dan sampul berdasarkan produk yang terkait
       if (transaksi.Ebook && transaksi.Ebook.judul_ebook) {
         tipe_produk = 'ebook';
         judul_produk = transaksi.Ebook.judul_ebook;
+        ebook_file = transaksi.Ebook.ebook_file;
+        sampul_produk = transaksi.Ebook.sampul_ebook;
       } else if (transaksi.Kelas && transaksi.Kelas.judul_kelas) {
         tipe_produk = 'kelas';
         judul_produk = transaksi.Kelas.judul_kelas;
+        sampul_produk = transaksi.Kelas.sampul_kelas;
       } else if (transaksi.Video && transaksi.Video.judul_video) {
         tipe_produk = 'video';
+        id_video = transaksi.Video.id_video;
         judul_produk = transaksi.Video.judul_video;
+        sampul_produk = transaksi.Video.sampul_video;
       }
 
       return {
@@ -331,7 +340,10 @@ const getTransaksiByIdUser = async (req, res) => {
         judul: judul_produk,  
         harga: transaksi.harga,  
         status: transaksi.status,  
-        tipe_produk, 
+        tipe_produk,
+        sampul: sampul_produk,
+        ebook_file,
+        id_video
       };
     });
 

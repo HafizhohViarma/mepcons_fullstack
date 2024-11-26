@@ -1,20 +1,20 @@
+// models/index.js
 const Sequelize = require('sequelize');
 const config = require('../config/dbconfig.js');
 
-// koneksi ya gess yakkk
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
   dialect: config.dialect,
+  logging: false, // set true untuk melihat query SQL
   pool: {
     max: config.pool.max,
     min: config.pool.min,
     acquire: config.pool.acquire,
     idle: config.pool.idle,
   },
-  logging: false, 
 });
 
-// Inisialisasi objek guys
+// Inisialisasi db object
 const db = {};
 
 db.Sequelize = Sequelize;
