@@ -1,16 +1,19 @@
 import SidebarList from './SidebarList';
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
 const PageUser = () => {
   const [users, setUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const BASE_URL = 'http://localhost:8082'; 
 
   useEffect(() => {
     getUsers();
@@ -18,8 +21,7 @@ const PageUser = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:8082/api/users');
-      
+      const response = await axios.get(`${BASE_URL}/api/users`);
       setUsers(response.data);
     } catch (error) {
       setError(error.response ? error.response.data.message : error.message);
@@ -34,7 +36,7 @@ const PageUser = () => {
 
   const deleteUser = async () => {
     try {
-      await axios.delete(`http://localhost:8082/api/users/${selectedUserId}`);
+      await axios.delete(`${BASE_URL}/api/users/${selectedUserId}`);
       getUsers();
       setShowConfirmModal(false);
       setShowSuccessModal(true);
@@ -42,11 +44,32 @@ const PageUser = () => {
       setTimeout(() => {
         setShowSuccessModal(false);
       }, 2000);
-      
     } catch (error) {
       console.log(error);
     }
   };
+
+  const getProfileImageUrl = (profilePath) => {
+    if (!profilePath) return null;
+
+    if (profilePath.startsWith('http')) {
+      return profilePath;
+    }
+
+    return `${BASE_URL}${profilePath}`;
+  };
+
+  // Handle search input
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Filter users based on search query
+  const filteredUsers = users.filter((user) =>
+    user.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    user.level.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="dashboard">
@@ -55,10 +78,22 @@ const PageUser = () => {
       <div className="content" style={{ backgroundColor: 'white', padding: '20px' }}>
         <h1 className="has-text-black text-center">Daftar User</h1>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
           <Link to="/add-user">
             <button className="button is-primary">+ Add User</button>
           </Link>
+
+          {/* Search Bar */}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              type="text"
+              className="input"
+              placeholder="Cari User..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              style={{ width: '300px', marginRight: '10px' }}
+            />
+          </div>
         </div>
 
         {error && <p style={{ color: 'red' }}>Error: {error}</p>}
@@ -76,8 +111,8 @@ const PageUser = () => {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((user, index) => (
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user, index) => (
                 <tr key={user.id_user}>
                   <td>{index + 1}</td>
                   <td>{user.nama}</td>
@@ -85,7 +120,17 @@ const PageUser = () => {
                   <td>{user.telp}</td>
                   <td>
                     {user.profil ? (
-                      <img src={`http://localhost:8082/${user.profil}`} alt="Profil" width="50" height="50" />
+                      <img 
+                        src={getProfileImageUrl(user.profil)} 
+                        alt="Profil"
+                        width="50"
+                        height="50"
+                        style={{ objectFit: 'cover' }}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/default-avatar.png'; // Add a default avatar image
+                        }}
+                      />
                     ) : (
                       <span>Tidak ada</span>
                     )}
@@ -113,7 +158,7 @@ const PageUser = () => {
         </table>
       </div>
 
-      {/* Modal Konfirmasi Hapus */}
+      {/* Modals remain unchanged */}
       {showConfirmModal && (
         <div className="modal is-active">
           <div className="modal-background" onClick={() => setShowConfirmModal(false)}></div>
@@ -132,20 +177,18 @@ const PageUser = () => {
         </div>
       )}
 
-      {/* Modal Sukses Hapus */}
       {showSuccessModal && (
-      <div className="modal is-active">
-        <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
-        <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-          <div className="box has-text-centered">
-            <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
-            <p>User berhasil dihapus!</p>
+        <div className="modal is-active">
+          <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
+          <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div className="box has-text-centered">
+              <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
+              <p>User berhasil dihapus!</p>
+            </div>
           </div>
+          <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
         </div>
-        <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
-      </div>
-    )
-    }
+      )}
     </div>
   );
 };

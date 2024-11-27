@@ -8,9 +8,11 @@ const Navbar = () => {
   const [loading, setLoading] = useState(true); // For handling loading state
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
+  const userName = localStorage.getItem('userName');
   
-  console.log('User ID:', userId); // Debug log to check userId
-  console.log('Token:', token); // Debug log to check token
+  console.log('User ID:', userId); 
+  console.log('Token:', token); 
+  console.log('Username:', userName); 
 
   useEffect(() => {
     // Cek apakah token login ada di localStorage

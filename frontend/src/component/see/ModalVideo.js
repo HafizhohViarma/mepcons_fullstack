@@ -14,7 +14,8 @@ const ModalVideo = ({ isOpen, onClose, videos }) => {
   };
 
   const handlePurchase = async () => {
-    const idUser = localStorage.getItem('userId');  // Ambil ID user dari localStorage
+    const idUser = localStorage.getItem('userId'); 
+    const userName = localStorage.getItem('userName'); 
     console.log('User ID:', idUser);
   
     if (!idUser) {
@@ -33,6 +34,7 @@ const ModalVideo = ({ isOpen, onClose, videos }) => {
           tipe_produk: 'video',
           harga: videos.harga_video,
           payment: 'midtrans',
+          nama: userName,
         }),
       });
   

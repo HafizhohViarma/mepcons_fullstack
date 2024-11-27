@@ -147,7 +147,7 @@ const DaftarKelas = () => {
             {filteredKelas.map((kelasBro, indexBos) => (
               <div className="col-md-4 mb-4" key={indexBos}>
                 <div className="card">
-                  <img src={kelasBro.sampul_kelas} alt="Logo" className="poster-image card-img-top" />
+                  <img src={kelasBro.sampul_kelas} alt="Logo" className="poster-image card-img-top" style={{ width : 400, height: 500 }} />
                   <div className="card-body">
                     <h3 className="card-title">{kelasBro.judul_kelas}</h3>
                     <div className="d-flex justify-content-between align-items-center">

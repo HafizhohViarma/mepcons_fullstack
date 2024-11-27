@@ -1,6 +1,6 @@
 import SidebarList from './SidebarList';
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
@@ -10,18 +10,42 @@ const PageVideo = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredVideos, setFilteredVideos] = useState([]);
+
+  // Memindahkan filterVideos ke dalam useCallback untuk menghindari infinite loop
+  const filterVideos = useCallback(() => {
+    const filtered = videos.filter(video => 
+      video.judul_video.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      video.keterangan_video.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredVideos(filtered);
+  }, [searchQuery, videos]); // Dependencies untuk useCallback
 
   useEffect(() => {
     getVideos();
   }, []);
 
+  useEffect(() => {
+    filterVideos();
+  }, [filterVideos]); // Sekarang filterVideos menjadi dependency
+
   const getVideos = async () => {
     try {
       const response = await axios.get('http://localhost:8082/api/videos');
       setVideos(response.data);
+      setFilteredVideos(response.data);
     } catch (error) {
       console.error('Error fetching videos:', error);
     }
+  };
+
+  const handleSearch = () => {
+    filterVideos();
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   const handleDeleteClick = (id) => {
@@ -53,23 +77,33 @@ const PageVideo = () => {
     }).format(price);
   };
 
-
   return (
     <div className="dashboard">
-      {/* Sidebar */}
       <SidebarList />
 
-      {/* Content Area */}
       <div className="content" style={{ backgroundColor: 'white', padding: '20px' }}>
         <h1 className="has-text-black text-center">Daftar Video</h1>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <Link to="/add-video">
             <button className="button is-primary">+ Add Video</button>
           </Link>
+
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <input
+              type="text"
+              className="input"
+              placeholder="Search videos..."
+              style={{ marginRight: '10px' }}
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') handleSearch();
+              }}
+            />
+          </div>
         </div>
 
-        {/* Tabel Data Video */}
         <table className="table is-fullwidth">
           <thead>
             <tr>
@@ -83,13 +117,13 @@ const PageVideo = () => {
             </tr>
           </thead>
           <tbody>
-            {videos.map((video, index) => (
+            {filteredVideos.map((video, index) => (
               <tr key={video.id_video}>
                 <td>{index + 1}</td>
                 <td>{video.judul_video}</td>
                 <td>{video.keterangan_video}</td>
                 <td>
-                <img src={video.sampul_video} alt="Sampul" width="100" />
+                  <img src={video.sampul_video} alt="Sampul" width="100" />
                 </td>
                 <td>
                   <Link to={`/videos/${video.id_video}`}>
@@ -135,18 +169,17 @@ const PageVideo = () => {
 
       {/* Modal Sukses Hapus */}
       {showSuccessModal && (
-      <div className="modal is-active">
-        <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
-        <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-          <div className="box has-text-centered">
-            <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
-            <p>Video berhasil dihapus!</p>
+        <div className="modal is-active">
+          <div className="modal-background" onClick={() => setShowSuccessModal(false)}></div>
+          <div className="modal-content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <div className="box has-text-centered">
+              <p style={{ fontSize: '1.5rem', color: 'green', marginBottom: '10px' }}>✔️</p>
+              <p>Video berhasil dihapus!</p>
+            </div>
           </div>
+          <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
         </div>
-        <button className="modal-close is-large" aria-label="close" onClick={() => setShowSuccessModal(false)}></button>
-      </div>
-    )
-    }
+      )}
     </div>
   );
 };

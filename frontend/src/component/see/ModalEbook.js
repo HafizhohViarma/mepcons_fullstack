@@ -14,7 +14,10 @@ const ModalEbook = ({ isOpen, onClose, ebook }) => {
   };
 
   const handlePurchase = async () => {
-    const idUser = localStorage.getItem('userId'); // Ambil ID user dari localStorage
+    const idUser = localStorage.getItem('userId'); 
+    const userName = localStorage.getItem('userName'); 
+    console.log("User Name:", userName);
+    
     if (!idUser) {
       // Arahkan ke halaman login jika userId tidak ditemukan
       alert('Anda perlu login untuk melanjutkan pembelian.');
@@ -32,6 +35,7 @@ const ModalEbook = ({ isOpen, onClose, ebook }) => {
           tipe_produk: 'ebook',
           harga: ebook.harga_ebook,
           payment: 'midtrans',
+          nama: userName,
         }),
       });
 

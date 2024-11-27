@@ -184,7 +184,7 @@ const DaftarVideo = () => {
             {filteredVideos.map((videos, index) => (
               <div className="col-md-4 mb-4" key={index}>
                 <div className="card">
-                  <img src={videos.sampul_video} alt="Logo" className="poster-image card-img-top" />
+                  <img src={videos.sampul_video} alt="Logo" className="poster-image card-img-top" style={{ width : 400, height: 500 }} />
                   <div className="card-body">
                     <h4 className="card-title">{videos.judul_video}</h4>
                     <div className="d-flex justify-content-between align-items-center">
@@ -209,7 +209,7 @@ const DaftarVideo = () => {
             {filteredEbooks.map((e, index) => (
               <div className="col-md-4 mb-4" key={index}>
                 <div className="card">
-                  <img src={e.sampul_ebook} alt="Logo" className="poster-image card-img-top" />
+                  <img src={e.sampul_ebook} alt="Logo" className="poster-image card-img-top" style={{ width : 400, height: 500 }} />
                   <div className="card-body">
                     <h3 className="card-title">{e.judul_ebook}</h3>
                     <div className="d-flex justify-content-between align-items-center">

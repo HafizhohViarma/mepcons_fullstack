@@ -237,7 +237,7 @@ const LandingPage = () => {
               {videos.length > 0 ? (
                 videos.map((video, index) => (
                   <div key={index}>
-                    <img src={video.sampul_video} alt="Poster" className="poster-image" />
+                    <img src={video.sampul_video} alt="Poster" className="poster-image" style={{ width : 400, height: 500 }}/>
                     <h3 className="mt-2 mb-2">{video.judul_video}</h3>
                     <div className="d-flex justify-content-between">
                     <button onClick={() => openModalVideo(video)} className="btn-detail">
@@ -258,7 +258,7 @@ const LandingPage = () => {
               {ebook.length > 0 ? (
                 ebook.map((item, index) => (
                   <div key={index}>
-                    <img src={item.sampul_ebook} alt="Poster" className="poster-image" />
+                    <img src={item.sampul_ebook} alt="Poster" className="poster-image" style={{ width : 400, height: 500 }} />
                     <h3 className="mt-2 mb-2">{item.judul_ebook}</h3>
                     <div className="d-flex justify-content-between">
                       <button onClick={() => openModalEbook(item)} className="btn-detail">
@@ -279,7 +279,7 @@ const LandingPage = () => {
               {kelas.length > 0 ? (
                 kelas.map((kelasItem, index) => (
                   <div key={index}>
-                    <img src={kelasItem.sampul_kelas} alt="Poster" className="poster-image" />
+                    <img src={kelasItem.sampul_kelas} alt="Poster" className="poster-image" style={{ width : 400, height: 500 }} />
                     <h3 className="mt-2 mb-2">{kelasItem.judul_kelas}</h3>
                     <div className="d-flex justify-content-between">
                       <button onClick={() => openModalKelas(kelasItem)} className="btn-detail">

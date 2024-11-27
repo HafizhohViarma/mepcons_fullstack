@@ -15,10 +15,19 @@ const EditVideo = () => {
         harga_video: ''
     });
 
+    // Fungsi untuk mengambil data video
     const fetchVideo = useCallback(async () => {
         try {
             const response = await axios.get(`http://localhost:8082/api/videos/${id}`);
-            setVideoData(response.data);
+            // Pastikan response.data memiliki semua field yang diperlukan
+            if (response.data) {
+                setVideoData({
+                    judul_video: response.data.judul_video || '',
+                    keterangan_video: response.data.keterangan_video || '',
+                    harga_video: response.data.harga_video || '',
+                    sampul_video: response.data.sampul_video || null
+                });
+            }
         } catch (error) {
             console.error('Error fetching video details:', error);
         }
@@ -30,27 +39,29 @@ const EditVideo = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setVideoData((prevData) => ({
+        setVideoData(prevData => ({
             ...prevData,
-            [name]: value,
+            [name]: value
         }));
     };
 
     const handleFileChange = (e) => {
-        setVideoData((prevData) => ({
+        setVideoData(prevData => ({
             ...prevData,
-            sampul_video: e.target.files[0],
+            sampul_video: e.target.files[0]
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+        
+        // Append semua data ke FormData
         formData.append('judul_video', videoData.judul_video);
         formData.append('keterangan_video', videoData.keterangan_video);
         formData.append('harga_video', videoData.harga_video);
 
-        if (videoData.sampul_video) {
+        if (videoData.sampul_video instanceof File) {
             formData.append('sampul_video', videoData.sampul_video);
         }
 
@@ -71,7 +82,9 @@ const EditVideo = () => {
             <SidebarList />
             <div className="content" style={{ padding: '30px' }}>
                 <Link to="/video">
-                    <button className="button is-warning"><IoMdArrowBack /> Kembali</button>
+                    <button className="button is-warning">
+                        <IoMdArrowBack /> Kembali
+                    </button>
                 </Link>
                 <h2 className="text-center">Form Edit Video</h2>
 
@@ -105,6 +118,15 @@ const EditVideo = () => {
 
                     <div className="field">
                         <label className="label">Sampul Video</label>
+                        {videoData.sampul_video && typeof videoData.sampul_video === 'string' && (
+                            <div className="mb-2">
+                                <img 
+                                    src={videoData.sampul_video}
+                                    alt="Current thumbnail"
+                                    style={{ maxWidth: '200px' }}
+                                />
+                            </div>
+                        )}
                         <div className="control">
                             <input
                                 type="file"
@@ -132,7 +154,9 @@ const EditVideo = () => {
 
                     <div className="field">
                         <div className="control">
-                            <button type="submit" className="button is-primary">Update Video</button>
+                            <button type="submit" className="button is-primary">
+                                Update Video
+                            </button>
                         </div>
                     </div>
                 </form>

@@ -3,6 +3,8 @@
   import 'bootstrap/dist/css/bootstrap.min.css';
   import 'bootstrap-icons/font/bootstrap-icons.css';
   import 'boxicons/css/boxicons.min.css';
+  // import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
   import PageVideo from "./component/PageVideo";
   import PageEbook from "./component/PageEbook";
   import PageKelas from "./component/PageKelas";
@@ -36,6 +38,11 @@ import UbahProfile from "./component/user/UbahProfile";
 import Security from "./component/user/Security";
 import PageDetailTransaksi from "./component/PageDetailTransaksi";
 import Payment from "./component/user/Payment";
+import VideoAkses from "./component/user/VideoAkses";
+import ForgotPassword from "./component/ForgotPassword";
+import EnterOTP from "./component/EnterOTP";
+import ResetPassword from "./component/ResetPassword";
+import EbookViewer from "./component/user/EbookViewer";
 
   function App() {
     return (
@@ -83,6 +90,9 @@ import Payment from "./component/user/Payment";
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/auth-success" element={<AuthSuccess/>}/>
+          <Route path="/forgot-password" element={<ForgotPassword/>}/>
+          <Route path="/enter-otp" element={<EnterOTP/>}/>
+          <Route path="/reset-password" element={<ResetPassword/>}/>
 
           {/* Halaman Sidebar User */}
           <Route path="/profile" element={<Dashboard/>}/>
@@ -91,7 +101,9 @@ import Payment from "./component/user/Payment";
           <Route path="/video-paid" element={<VideoPaid/>}/>
           <Route path="/kelas-paid" element={<KelasPaid/>}/>
           <Route path="/ebook-paid" element={<EbookPaid/>}/>
+          <Route path="/ebook-viewer" element={<EbookViewer/>} />
           <Route path="/payment" element={<Payment/>}/>
+          <Route path="/akses-video/:id_video" element={<VideoAkses/>}/>
         </Routes>
       </BrowserRouter>
     );

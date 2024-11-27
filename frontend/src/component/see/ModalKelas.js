@@ -14,7 +14,8 @@ const ModalKelas = ({ isOpen, onClose, kelas }) => {
   };
 
   const handlePurchase = async () => {
-    const idUser = localStorage.getItem('userId');  
+    const idUser = localStorage.getItem('userId'); 
+    const userName = localStorage.getItem('userName');  
     console.log('User ID:', idUser);
   
     if (!idUser) {
@@ -33,6 +34,7 @@ const ModalKelas = ({ isOpen, onClose, kelas }) => {
           tipe_produk: 'kelas',
           harga: kelas.harga_kelas,
           payment: 'midtrans',
+          nama: userName,
         }),
       });
   
