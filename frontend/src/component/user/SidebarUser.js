@@ -4,6 +4,7 @@ import logo from '../../img/mepcons_metro-logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ProfileImageUpload from './ProfileImageUpload';
 
 const SidebarUser = () => {
     const navigate = useNavigate();
@@ -26,6 +27,10 @@ const SidebarUser = () => {
         
         // Otherwise, return the local server path
         return `http://localhost:8082${profilePath}`;
+    };
+
+    const handleImageUpdate = (newImageUrl) => {
+        setProfileImage(newImageUrl);
     };
 
     useEffect(() => {
@@ -86,11 +91,9 @@ const SidebarUser = () => {
             </div>
             <div className="user-profile">
                 <div className="user-avatar">
-                    <img 
-                        src={profileImage}
-                        alt="Profile" 
-                        className="profile-image"
-                        onError={() => setProfileImage('/default-avatar.png')}
+                    <ProfileImageUpload 
+                        currentImage={profileImage}
+                        onImageUpdate={handleImageUpdate}
                     />
                 </div>
                 <div className="user-info">

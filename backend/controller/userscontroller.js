@@ -216,10 +216,10 @@ exports.deleteUser = async (req, res) => {
         }
 
         // Path untuk menyimpan file
-        const uploadPath = path.join('uploads', file.filename);
+        const uploadPath = path.join('/uploads', file.filename);
 
         // Update record user dengan path foto profil baru
-        user.profil = uploadPath; 
+        user.profil = uploadPath.replace(/\\/g, '/');; 
         await user.save();
 
         // URL foto yang bisa diakses
