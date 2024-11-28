@@ -23,7 +23,7 @@ const KelasPaid = () => {
         setPaidKelas(settledKelas);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch your class');
+        setError('Anda belum mengikuti kelas apapun!');
         setLoading(false);
       }
     };
@@ -47,7 +47,7 @@ const KelasPaid = () => {
       <div className="dashboard">
         <SidebarUser />
         <div className="content mt-5">
-          <p className="text-danger">{error}</p>
+          <p className="text-danger ml-5">{error}</p>
         </div>
       </div>
     );

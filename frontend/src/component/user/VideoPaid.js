@@ -22,7 +22,7 @@ const VideoPaid = () => {
         setPaidVideos(settledVideos);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch your videos');
+        setError('Anda belum mengakses video manapun!');
         setLoading(false);
       }
     };
@@ -46,7 +46,7 @@ const VideoPaid = () => {
       <div className="dashboard">
         <SidebarUser />
         <div className="content mt-5">
-          <p className="text-danger">{error}</p>
+          <p className="text-danger ml-5">{error}</p>
         </div>
       </div>
     );

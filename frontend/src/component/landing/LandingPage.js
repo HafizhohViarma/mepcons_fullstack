@@ -415,12 +415,14 @@ const LandingPage = () => {
                 }
                 return acc;
               }, []).map((slideImages, index) => (
-                <div key={index} className="testimonial-slide d-flex justify-content-between">
-                  {slideImages.map((image, imgIndex) => (
-                    <div key={imgIndex} className="testimonials-item">
-                      <img src={image} alt={`Testimonial ${imgIndex + 1}`} className="img-fluid" />
-                    </div>
-                  ))}
+                <div key={index} className="testimonial-slide">
+                  <div className="testimonials-grid">
+                    {slideImages.map((image, imgIndex) => (
+                      <div key={imgIndex} className="testimonials-item">
+                        <img src={image} alt={`Testimonial ${imgIndex + 1}`} className="img-fluid" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </Slider>

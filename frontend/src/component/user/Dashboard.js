@@ -7,7 +7,17 @@ import { CgProfile } from "react-icons/cg";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
-  const userId = localStorage.getItem('userId'); // Retrieve userId from localStorage
+  const userId = localStorage.getItem('userId'); 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,7 +34,7 @@ const Dashboard = () => {
   }, [userId]);
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${isMobile ? 'mobile' : ''}`}>
       {/* Sidebar */}
       <SidebarUser />
 

@@ -1,14 +1,11 @@
 import React from 'react';
-import '../style.css'; // Import CSS untuk styling
+import '../style.css';
 import SidebarList from './SidebarList';
 
 const AdminList = () => {
   return (
     <div className="dashboard">
-      {/* Sidebar */}
-      <SidebarList/>
-
-      {/* Content Area */}
+      <SidebarList />
       <div className="content">
         <div className="content-no-background">
           <h1 className="has-text-info">Selamat Datang Admin</h1>
@@ -20,6 +17,6 @@ const AdminList = () => {
       </div>
     </div>
   );
-}
+};
 
 export default AdminList;

@@ -18,6 +18,7 @@ const DaftarVideo = () => {
   const [filteredVideos, setFilteredVideos] = useState([]);
   const [filteredEbooks, setFilteredEbooks] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,31 +115,77 @@ const DaftarVideo = () => {
     getEbook();
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+
   return (
     <div>
       <header className="header_area">
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
             <a className="navbar-brand logo_h" href="index.php">
-                <img src={logo} alt="Logo" className="logo-image"/>
+              <img src={logo} alt="Logo" className="logo-image"/>
             </a>
-            <div className="collapse navbar-collapse offset" id="navbarSupportedContent">
+            
+            {/* Mobile Toggle Button */}
+            <button 
+              className="navbar-toggler" 
+              type="button" 
+              onClick={toggleMobileMenu}
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            
+            <div 
+              className={`collapse navbar-collapse offset ${isMobileMenuOpen ? 'show' : ''}`} 
+              id="navbarSupportedContent"
+            >
               <ul className="nav navbar-nav menu_nav ml-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/">Beranda</a>
+                  <a 
+                    className="nav-link" 
+                    href="/" 
+                    onClick={closeMobileMenu}
+                  >
+                    Beranda
+                  </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/daftar-kelas">Daftar Kelas</a>
+                  <a 
+                    className="nav-link" 
+                    href="/daftar-kelas"
+                    onClick={closeMobileMenu}
+                  >
+                    Daftar Kelas
+                  </a>
                 </li>
                 {isLoggedIn && userId ? (
-                  <>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/profile">Profile</a>
-                    </li>
-                  </>
+                  <li className="nav-item">
+                    <a 
+                      className="nav-link" 
+                      href="/profile"
+                      onClick={closeMobileMenu}
+                    >
+                      Profile
+                    </a>
+                  </li>
                 ) : (
                   <li className="nav-item">
-                    <a className="nav-link" href="/login">Masuk / Daftar</a>
+                    <a 
+                      className="nav-link" 
+                      href="/login"
+                      onClick={closeMobileMenu}
+                    >
+                      Masuk / Daftar
+                    </a>
                   </li>
                 )}
               </ul>
@@ -146,7 +193,6 @@ const DaftarVideo = () => {
           </div>
         </nav>
       </header>
-
       <section className="daftar-kelas">
         <div className="container">
           <div className="card-full">

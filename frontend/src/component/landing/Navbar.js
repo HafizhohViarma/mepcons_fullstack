@@ -9,6 +9,7 @@ const Navbar = () => {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const userName = localStorage.getItem('userName');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   console.log('User ID:', userId); 
   console.log('Token:', token); 
@@ -47,34 +48,56 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [userId]);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div>
       <header className="header_area">
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
-            <a className="navbar-brand logo_h" href="index.php">
+            <a className="navbar-brand logo_h" href="/">
               <img src={logo} alt="Logo" className="logo-image"/>
             </a>
-            <div className="collapse navbar-collapse offset" id="navbarSupportedContent">
+            
+            <button 
+              className="navbar-toggler" 
+              type="button" 
+              onClick={toggleMenu}
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className={`navbar-collapse ${isMenuOpen ? 'show' : ''}`}>
               <ul className="nav navbar-nav menu_nav ml-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/">Beranda</a>
+                  <a className="nav-link" href="/" onClick={() => setIsMenuOpen(false)}>
+                    Beranda
+                  </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#about-us">Tentang Kami</a>
+                  <a className="nav-link" href="#about-us" onClick={() => setIsMenuOpen(false)}>
+                    Tentang Kami
+                  </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#testimoni">Ulasan</a>
+                  <a className="nav-link" href="#testimoni" onClick={() => setIsMenuOpen(false)}>
+                    Ulasan
+                  </a>
                 </li>
                 {isLoggedIn && !loading ? (
-                  <>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/profile/">Profile</a>
-                    </li>
-                  </>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/profile/" onClick={() => setIsMenuOpen(false)}>
+                      Profile
+                    </a>
+                  </li>
                 ) : (
                   <li className="nav-item">
-                    <a className="nav-link" href="/login">Masuk / Daftar</a>
+                    <a className="nav-link" href="/login" onClick={() => setIsMenuOpen(false)}>
+                      Masuk / Daftar
+                    </a>
                   </li>
                 )}
               </ul>

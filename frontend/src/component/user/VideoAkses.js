@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../../style.css';
 
 const VideoAkses = () => {
-  const { id_video } = useParams(); // Mengambil id_video dari URL
+  const { id_video } = useParams(); 
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -25,7 +25,7 @@ const EbookPaid = () => {
         setPaidEbook(settledEbook);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch your ebooks');
+        setError('Anda belum mengakses E-Book apapun!');
         setLoading(false);
       }
     };
@@ -55,7 +55,7 @@ const EbookPaid = () => {
       <div className="dashboard">
         <SidebarUser />
         <div className="content mt-5">
-          <p className="text-danger">{error}</p>
+          <p className="text-danger ml-5">{error}</p>
         </div>
       </div>
     );

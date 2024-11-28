@@ -13,6 +13,7 @@ const DaftarKelas = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +81,14 @@ const DaftarKelas = () => {
     }
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <div>
       <header className="header_area">
@@ -88,23 +97,60 @@ const DaftarKelas = () => {
             <a className="navbar-brand logo_h" href="index.php">
               <img src={logo} alt="Logo" className="logo-image"/>
             </a>
-            <div className="collapse navbar-collapse offset" id="navbarSupportedContent">
+            
+            {/* Mobile Toggle Button */}
+            <button 
+              className="navbar-toggler" 
+              type="button" 
+              onClick={toggleMobileMenu}
+              aria-expanded={isMobileMenuOpen}
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            
+            <div 
+              className={`collapse navbar-collapse offset ${isMobileMenuOpen ? 'show' : ''}`} 
+              id="navbarSupportedContent"
+            >
               <ul className="nav navbar-nav menu_nav ml-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/">Beranda</a>
+                  <a 
+                    className="nav-link" 
+                    href="/" 
+                    onClick={closeMobileMenu}
+                  >
+                    Beranda
+                  </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/daftar-video">Daftar Video & E-Book</a>
+                  <a 
+                    className="nav-link" 
+                    href="/daftar-video"
+                    onClick={closeMobileMenu}
+                  >
+                    Daftar Video & E-Book
+                  </a>
                 </li>
                 {isLoggedIn && userId ? (
-                  <>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/profile">Profile</a>
-                    </li>
-                  </>
+                  <li className="nav-item">
+                    <a 
+                      className="nav-link" 
+                      href="/profile"
+                      onClick={closeMobileMenu}
+                    >
+                      Profile
+                    </a>
+                  </li>
                 ) : (
                   <li className="nav-item">
-                    <a className="nav-link" href="/login">Masuk / Daftar</a>
+                    <a 
+                      className="nav-link" 
+                      href="/login"
+                      onClick={closeMobileMenu}
+                    >
+                      Masuk / Daftar
+                    </a>
                   </li>
                 )}
               </ul>

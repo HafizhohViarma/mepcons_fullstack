@@ -19,7 +19,7 @@ const Payment = () => {
         setTransactions(response.data.data);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch transactions. Please try again later.');
+        setError('Kamu belum melakukan transaksi apapun, lakukan transaksi untuk mengakses produk terbaik mu!');
         setLoading(false);
         console.error('Error fetching transactions:', err);
       }
@@ -55,12 +55,12 @@ const Payment = () => {
     <div className="dashboard">
       <SidebarUser />
       <div className="content mt-5">
-        <h2 className="text-2xl font-bold mb-2">
+        <h2 className="text-2xl font-bold mb-2 ml-5">
           Transaksi Saya
         </h2>
-        <small className="text-gray-600 block mb-6">
+        <small className="text-gray-600 block mb-6 ml-5">
           Pantau status transaksi Anda dan akses materi pembelajaran seperti video, e-book, atau jadwal kelas dengan mudah.
-          Jadilah ahli di bidang Anda dengan pengalaman belajar yang optimal.
+          Jadilah ahli di bidang Anda dengan pengalaman belajar maksimal.
         </small>
 
         <section className="mt-5">

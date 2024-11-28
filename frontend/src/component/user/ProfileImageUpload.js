@@ -2,12 +2,14 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Camera } from 'lucide-react';
+import DefaultProfileImage from '../../img/default-profile.png';
 
 const ProfileImageUpload = ({ currentImage, onImageUpdate }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  
 
   const handleImageClick = () => {
     if (fileInputRef.current) {
@@ -18,6 +20,7 @@ const ProfileImageUpload = ({ currentImage, onImageUpdate }) => {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
+    
 
     // Validasi tipe file
     const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -92,7 +95,7 @@ const ProfileImageUpload = ({ currentImage, onImageUpdate }) => {
           alt="Profile"
           className="profile-image rounded-full w-24 h-24 object-cover transition-opacity group-hover:opacity-75"
           onError={(e) => {
-            e.target.src = '/default-avatar.png';
+            e.target.src = DefaultProfileImage;
           }}
         />
         <div className="absolute top-2 right-2 bg-blue-500 p-1 rounded-full cursor-pointer hover:bg-blue-600 transition-colors duration-300">

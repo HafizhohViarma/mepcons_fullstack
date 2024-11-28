@@ -100,7 +100,7 @@ const Register = () => {
 
           <div className="login-link mt-2">
             <p>Already have an account?
-              <a href="/"> Login</a>
+              <a href="/login"> Login</a>
             </p>
           </div>
         </form>
