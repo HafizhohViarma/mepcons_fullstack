@@ -110,14 +110,31 @@ exports.authenticate = (req, res, next) => {
 // Fungsi untuk mendapatkan profil user
 exports.getUserProfile = async (req, res) => {
   try {
-    const user = await Users.findByPk(req.userId);
+    const userId = req.userId || req.headers['user-id'];
+    
+    if (!userId) {
+      return res.status(404).json({ message: 'User ID tidak ditemukan' });
+    }
+
+    const user = await Users.findOne({
+      where: { id_user: userId },
+      attributes: ['id_user', 'nama', 'email', 'profil', 'level'] 
+    });
+
     if (!user) {
       return res.status(404).json({ message: 'User tidak ditemukan' });
     }
+
+    if (user.profil) {
+      if (!user.profil.startsWith('http')) {
+        user.profil = `http://localhost:8082${user.profil}`;
+      }
+    }
+
     res.json(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Gagal mengambil profil' });
+    console.error('Error in getUserProfile:', error);
+    res.status(500).json({ message: 'Gagal mengambil profil', error: error.message });
   }
 };
 
