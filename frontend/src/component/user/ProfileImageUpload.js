@@ -20,7 +20,6 @@ const ProfileImageUpload = ({ currentImage, onImageUpdate }) => {
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-    
 
     // Validasi tipe file
     const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -43,16 +42,12 @@ const ProfileImageUpload = ({ currentImage, onImageUpdate }) => {
 
     try {
       const token = localStorage.getItem('token');
-      if (!token) {
+      const userId = localStorage.getItem('userId'); // Ambil userId langsung dari localStorage
+
+      if (!token || !userId) {
         navigate('/');
         return;
       }
-
-      const response = await axios.get('http://localhost:8082/api/users/profile', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      const userId = response.data.id_user;
 
       const uploadResponse = await axios.post(
         `http://localhost:8082/api/users/upload-foto/${userId}`,
@@ -65,7 +60,7 @@ const ProfileImageUpload = ({ currentImage, onImageUpdate }) => {
         }
       );
 
-      if (onImageUpdate) {
+      if (uploadResponse.data.fileUrl) {
         onImageUpdate(uploadResponse.data.fileUrl);
       }
     } catch (error) {

@@ -13,10 +13,12 @@ const SidebarUser = () => {
     const [profileImage, setProfileImage] = useState('/default-avatar.png');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const userName = localStorage.getItem('userName'); 
 
     const getProfileImageUrl = (profilePath) => {
         if (!profilePath || profilePath === 'null') return '/default-avatar.png';
-        return profilePath.startsWith('http') ? profilePath : `http://localhost:8082${profilePath}`;
+        if (profilePath.startsWith('http')) return profilePath;
+        return `http://localhost:8082${profilePath}`;
     };
 
     const handleImageUpdate = (newImageUrl) => {
@@ -30,30 +32,52 @@ const SidebarUser = () => {
     useEffect(() => {
         const fetchUserProfile = async () => {
             const token = localStorage.getItem('token');
-            if (!token) {
+            const userId = localStorage.getItem('userId');
+            if (!token || !userId) {
                 navigate('/');
                 return;
             }
-
             try {
                 const response = await axios.get('http://localhost:8082/api/users/profile', {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` },
+                    'User-ID': userId
                 });
+                const userData = response.data;
+                setUser({
+                    nama: userData.nama || userName,
+                    email: userData.email,
+                    profil: userData.profil
+                });
+                setProfileImage(getProfileImageUrl(userData.profil));
                 setUser(response.data);
-                setProfileImage(getProfileImageUrl(response.data.profil));
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
-                setLoading(false);
-                if (error.response?.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/');
+                try {
+                    const fallbackResponse = await axios.get(`http://localhost:8082/api/users/${userId}`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    setUser({
+                        nama: fallbackResponse.data.nama || userName,
+                        email: fallbackResponse.data.email,
+                        profil: fallbackResponse.data.profil
+                    });
+                    setProfileImage(getProfileImageUrl(fallbackResponse.data.profil));
+                } catch (fallbackError) {
+                    console.error('Fallback fetch failed:', fallbackError);
+                    setUser({
+                        nama: userName || 'User',
+                        email: 'Loading...',
+                        profil: '/default-avatar.png'
+                    });
                 }
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchUserProfile();
-    }, [navigate]);
+    }, [navigate, userName]);
 
     const handleLogout = () => {
         const isConfirmed = window.confirm('Apakah Anda yakin ingin logout?');
